@@ -1,0 +1,9 @@
+.root {
+    -fx-font-family: "Noto Sans CJK SC";
+    -fx-background-color: white;
+}
+
+.button {
+    -fx-background-color: #0076FF;
+    -fx-text-fill: white;
+}

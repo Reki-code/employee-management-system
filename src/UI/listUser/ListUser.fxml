@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableColumn?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<BorderPane prefHeight="800.0" prefWidth="1440.0" stylesheets="@ListUser.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.listUser.ListUserController">
+   <top>
+            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+                <Label styleClass="title">用户列表</Label>
+                <Label fx:id="editableTreeTableViewCount" styleClass="title" />
+                  <JFXTextField fx:id="searchField" prefHeight="30.0" prefWidth="226.0" promptText="搜索..." />
+         <padding>
+            <Insets left="40.0" top="20.0" />
+         </padding>
+                </HBox>
+   </top>
+   <center>
+                <JFXTreeTableView fx:id="editableTreeTableView" prefHeight="800.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <columns>
+                        <JFXTreeTableColumn fx:id="userNameEditableColumn" minWidth="133" text="用户名" />
+                        <JFXTreeTableColumn fx:id="phoneNumberEditableColumn" minWidth="133" text="联系电话" />
+                        <JFXTreeTableColumn fx:id="idEditableColumn" minWidth="133" text="用户编号" />
+                </columns>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" top="20.0" />
+         </BorderPane.margin>
+            </JFXTreeTableView>
+   </center>
+</BorderPane>

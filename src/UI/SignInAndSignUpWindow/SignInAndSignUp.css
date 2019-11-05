@@ -1,0 +1,44 @@
+.root {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-effect: dropshadow(gaussian, whitesmoke, 50, 0, 0, 0);
+    -fx-background-insets: 50;
+    -fx-font-family: "Noto Sans CJK SC";
+}
+
+.label {
+    -fx-font-family: "Noto Sans CJK SC";
+}
+
+.inputFiled {
+    -fx-font-size: 18;
+    -fx-prompt-text-fill: #969DA2;
+    -jfx-unfocus-color: #D4D7D9;
+}
+
+.loginBtn {
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #0076FF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.switchBtn {
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #D4D7D9;
+    -fx-text-fill: #969DA2;
+}
+
+.slideImage {
+    -fx-background-radius: 10px;
+    -fx-background-color: linear-gradient(to right top,
+    #D16BA5, #C777B9, #BA83CA,
+    #AA8FD8, #9A9AE1, #8AA7EC,
+    #79B3F4, #69BFF8, #52CFFE,
+    #41DFFF, #46EEFA, #5FFBF1);
+}
+
+
