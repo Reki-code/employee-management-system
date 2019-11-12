@@ -85,6 +85,18 @@ public class User {
         return false;
     }
 
+    public static void updateUserDetail(String column, String newValue, int id) {
+        String sql = "UPDATE _User SET " + column + " = ? WHERE id = ?";
+        try (var conn = databaseHandler.getConnection()){
+            var preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, newValue);
+            preparedStatement.setInt(2, id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static boolean findUsername(String name) {
         String sql = "SELECT * FROM _User WHERE username = ?";
         try (var conn = databaseHandler.getConnection()){

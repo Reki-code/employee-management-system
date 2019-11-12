@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+
+
+<AnchorPane prefHeight="436.0" prefWidth="609.0" stylesheets="@Profile.css" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.profile.ProfileController">
+   <ScrollPane prefHeight="436.0" prefWidth="609.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane prefHeight="200.0" prefWidth="609.0" style="-fx-background-color: blue;">
+         <Label layoutX="202.0" layoutY="68.0" prefHeight="65.0" prefWidth="150.0" text="User Name"/>
+         <ImageView fitHeight="136.0" fitWidth="139.0" layoutX="37.0" layoutY="26.0" pickOnBounds="true"
+                    preserveRatio="true" styleClass="avatar"/>
+         <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="107.0" layoutY="101.0" radius="100.0" stroke="BLACK"
+                 strokeType="INSIDE"/>
+      </Pane>
+   </ScrollPane>
+</AnchorPane>

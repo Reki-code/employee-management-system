@@ -15,11 +15,11 @@
             <VBox.margin>
                <Insets bottom="10.0" />
             </VBox.margin></JFXButton>
-            <JFXButton fx:id="addbook" onAction="#menuButtonHandler" prefHeight="50.0" prefWidth="1440.0" ripplerFill="WHITE" styleClass="side-button" text="添加图书">
+            <JFXButton fx:id="addbook" onAction="#menuButtonHandler" prefHeight="50.0" prefWidth="1440.0" ripplerFill="WHITE" styleClass="side-button" text="图书管理">
             <VBox.margin>
                <Insets bottom="10.0" />
             </VBox.margin></JFXButton>
-            <JFXButton fx:id="brrowbook" onAction="#menuButtonHandler" prefHeight="50.0" prefWidth="1440.0" ripplerFill="WHITE" styleClass="side-button" text="借书">
+            <JFXButton fx:id="brrowbook" onAction="#menuButtonHandler" prefHeight="50.0" prefWidth="1440.0" ripplerFill="WHITE" styleClass="side-button" text="借阅管理">
             <VBox.margin>
                <Insets bottom="10.0" />
             </VBox.margin></JFXButton>
@@ -27,7 +27,7 @@
             <VBox.margin>
                <Insets bottom="10.0" />
             </VBox.margin></JFXButton>
-            <JFXButton fx:id="addmember" onAction="#menuButtonHandler" prefHeight="50.0" prefWidth="1440.0" ripplerFill="WHITE" styleClass="side-button" text="添加用户">
+            <JFXButton fx:id="addmember" onAction="#menuButtonHandler" prefHeight="50.0" prefWidth="1440.0" ripplerFill="WHITE" styleClass="side-button" text="用户管理">
             <VBox.margin>
                <Insets bottom="10.0" />
             </VBox.margin></JFXButton>
