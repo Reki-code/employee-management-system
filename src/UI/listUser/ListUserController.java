@@ -1,6 +1,9 @@
 package UI.listUser;
 
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeTableColumn;
+import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
@@ -40,7 +43,7 @@ public class ListUserController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Thread(() -> Platform.runLater(this::setupUserTableView)).start();
+        new Thread(this::setupUserTableView).start();
     }
 
     private <T> void setupCellValueFactory(JFXTreeTableColumn<UserProperty, T> column, Function<UserProperty, ObservableValue<T>> mapper) {
@@ -77,13 +80,15 @@ public class ListUserController implements Initializable{
             }
         });
 
-        final ObservableList<UserProperty> userData = getUserData();
-        editableTreeTableView.setRoot(new RecursiveTreeItem<>(userData, RecursiveTreeObject::getChildren));
         editableTreeTableView.setShowRoot(false);
         editableTreeTableView.setEditable(true);
-        editableTreeTableViewCount.textProperty()
-                .bind(Bindings.createStringBinding(() -> "( " + editableTreeTableView.getCurrentItemsCount() + " ) ",
-                        editableTreeTableView.currentItemsCountProperty()));
+        final ObservableList<UserProperty> userData = getUserData();
+        Platform.runLater(() -> {
+            editableTreeTableView.setRoot(new RecursiveTreeItem<>(userData, RecursiveTreeObject::getChildren));
+            editableTreeTableViewCount.textProperty()
+                    .bind(Bindings.createStringBinding(() -> "( " + editableTreeTableView.getCurrentItemsCount() + " ) ",
+                            editableTreeTableView.currentItemsCountProperty()));
+        });
         searchField.textProperty()
                 .addListener(setupSearchField(editableTreeTableView));
     }
@@ -100,7 +105,7 @@ public class ListUserController implements Initializable{
 
     private ObservableList<UserProperty> getUserData() {
         final ObservableList<UserProperty> userData = FXCollections.observableArrayList();
-        User.getUsers().forEach( u -> userData.add(new UserProperty(u.getUsername(), u.getPhoneNumber(), u.getId())));
+        User.getUsers().forEach(u -> userData.add(new UserProperty(u.getUsername(), u.getPhoneNumber(), u.getId())));
         return userData;
     }
 

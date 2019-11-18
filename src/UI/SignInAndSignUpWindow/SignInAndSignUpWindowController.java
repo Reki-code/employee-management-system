@@ -1,19 +1,22 @@
 package UI.SignInAndSignUpWindow;
 
 import UI.dialog.InfoDialog;
-import animatefx.animation.FadeIn;
+import UI.util.WindowUtil;
 import animatefx.animation.SlideInLeft;
 import animatefx.animation.SlideInRight;
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXSpinner;
+import com.jfoenix.controls.JFXTextField;
 import data.User;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import workbench.MainWorkbench;
 
 public class SignInAndSignUpWindowController {
 
@@ -47,16 +50,18 @@ public class SignInAndSignUpWindowController {
         User user = new User();
         user.setUsername(loginUsername.getText());
         user.setPassword(loginPassword.getText());
-        new Thread(() -> Platform.runLater(() -> {
+        new Thread(() -> {
             if (user.signIn() == User.LoginStatus.SUCCESS) {
-                startMainWindow();
+                Platform.runLater(this::startMainWindow);
             } else {
-                var alert = new InfoDialog(Alert.AlertType.INFORMATION, "密码错误", new ButtonType("好的"));
-                alert.showAndWait();
-                signInBtn.setDisable(false);
-                signInSpinner.setVisible(false);
+                Platform.runLater(() -> {
+                    var alert = new InfoDialog(Alert.AlertType.INFORMATION, "密码错误", new ButtonType("好的"));
+                    alert.showAndWait();
+                    signInBtn.setDisable(false);
+                    signInSpinner.setVisible(false);
+                });
             }
-        })).start();
+        }).start();
     }
 
     @FXML
@@ -67,29 +72,24 @@ public class SignInAndSignUpWindowController {
         user.setUsername(signUpUsername.getText());
         user.setPassword(signUpPassword.getText());
         user.setPhoneNumber(signUpPhone.getText());
-        new Thread(() -> Platform.runLater(() -> {
+        new Thread(() -> {
             if (user.signUp()) {
-                startMainWindow();
+                Platform.runLater(this::startMainWindow);
             } else {
-                var alert = new InfoDialog(Alert.AlertType.INFORMATION, "注册失败", new ButtonType("好的"));
-                alert.showAndWait();
-                signUpBtn.setDisable(false);
-                signUpSpinner.setVisible(false);
+                Platform.runLater(() -> {
+                    var alert = new InfoDialog(Alert.AlertType.INFORMATION, "注册失败", new ButtonType("好的"));
+                    alert.showAndWait();
+                    signUpBtn.setDisable(false);
+                    signUpSpinner.setVisible(false);
+                });
             }
-        })).start();
+        }).start();
     }
 
     private void startMainWindow() {
-//        Parent mainWindow = FXMLLoader.load(getClass().getResource("../mainWindow/MainWindow.fxml"));
-        var stage = (Stage) rootPane.getScene().getWindow();
-        var workbench = MainWorkbench.buildWorkbench();
-        var scene = new Scene(workbench, 1024, 720);
-        var mainStage = new Stage();
-        mainStage.setTitle("管理系统");
-        mainStage.setScene(scene);
-        mainStage.show();
-        new FadeIn(workbench).play();
+        WindowUtil.createMainWindow(1024, 720).show();
 
+        var stage = (Stage) rootPane.getScene().getWindow();
         stage.hide();
     }
 
@@ -109,4 +109,17 @@ public class SignInAndSignUpWindowController {
         }
     }
 
+    @FXML
+    private void onPress(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            switch (slideState) {
+                case LEFT:
+                    signUp();
+                    break;
+                case RIGHT:
+                    signIn();
+                    break;
+            }
+        }
+    }
 }

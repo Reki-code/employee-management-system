@@ -40,7 +40,7 @@ public class User {
             e.printStackTrace();
         }
 
-        return true;
+        return false;
     }
 
     // login by username and password

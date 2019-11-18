@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXPasswordField?>
-<?import com.jfoenix.controls.JFXSpinner?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane fx:id="rootPane" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: rgba(255,255,255,0.85);" stylesheets="@SignInAndSignUp.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.SignInAndSignUpWindow.SignInAndSignUpWindowController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" onKeyPressed="#onPress" prefHeight="655.0"
+            prefWidth="1130.0" style="-fx-background-color: rgba(255,255,255,0.85);" stylesheets="@SignInAndSignUp.css"
+            xmlns="http://javafx.com/javafx/11.0.1"
+            fx:controller="UI.SignInAndSignUpWindow.SignInAndSignUpWindowController">
     <Label alignment="CENTER" layoutX="218.0" layoutY="167.0" prefHeight="46.0" prefWidth="129.0" text="登录">
         <font>
           <Font size="24.0" />
