@@ -2,6 +2,7 @@ package workbench.moudle;
 
 import com.dlsc.workbenchfx.model.WorkbenchModule;
 import com.jfoenix.controls.JFXSpinner;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,16 @@ public class CustomModule extends WorkbenchModule {
     CustomModule(String name, MaterialDesignIcon icon, String fxml) {
         super(name, icon);
         this.fxml = fxml;
+        loading();
+    }
+
+    CustomModule(String name, FontAwesomeIcon icon, String fxml) {
+        super(name, icon);
+        this.fxml = fxml;
+        loading();
+    }
+
+    private void loading() {
         var loading = new VBox(new JFXSpinner(), new Label("加载中..."));
         rootPane.getChildren().add(loading);
     }

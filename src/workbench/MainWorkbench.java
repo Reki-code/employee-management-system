@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.stage.Stage;
+import workbench.moudle.EmployeeModule;
 import workbench.moudle.ListUserModule;
 import workbench.moudle.ProfileModule;
 
@@ -26,6 +27,7 @@ public class MainWorkbench extends Application {
     public static Workbench buildWorkbench() {
         var workbench = Workbench.builder(
                 new ProfileModule(),
+                new EmployeeModule(),
                 new ListUserModule(),
                 new ListUserModule(),
                 new ListUserModule(),
