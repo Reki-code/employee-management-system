@@ -32,7 +32,9 @@
     <JFXButton fx:id="signUpBtn" layoutX="833.0" layoutY="512.0" onAction="#signUp" prefHeight="46.0" prefWidth="138.0" styleClass="loginBtn" text="注册" />
     <AnchorPane fx:id="slideAnchor" layoutX="565.0" prefHeight="655.0" prefWidth="565.0" styleClass="slideImage"
                 AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Label layoutX="50.0" layoutY="60.0" prefHeight="170.0" prefWidth="466.0" styleClass="title"
-               text="欢迎使用 XXX 管理系统"/>
+        <Label alignment="CENTER" layoutX="50.0" layoutY="101.0" prefHeight="92.0" prefWidth="466.0" styleClass="title"
+               text="欢迎使用"/>
+        <Label alignment="CENTER" layoutX="50.0" layoutY="137.0" prefHeight="170.0" prefWidth="466.0" styleClass="title"
+               text="职工信息管理系统"/>
     </AnchorPane>
 </AnchorPane>
