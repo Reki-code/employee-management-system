@@ -7,7 +7,7 @@
 <BorderPane prefHeight="800.0" prefWidth="1440.0" stylesheets="@ListUser.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.listUser.ListUserController">
    <top>
             <HBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER_LEFT">
-                <Label prefHeight="64.0" prefWidth="240.0" styleClass="title" text="用户信息">
+                <Label prefHeight="64.0" prefWidth="240.0" styleClass="title" text="管理员信息">
             <HBox.margin>
                <Insets />
             </HBox.margin></Label>
@@ -23,7 +23,7 @@
            <children>
                <JFXTreeTableView fx:id="editableTreeTableView" prefHeight="696.0" prefWidth="399.0">
                    <columns>
-                       <JFXTreeTableColumn fx:id="idEditableColumn" minWidth="133" text="用户编号"/>
+                       <JFXTreeTableColumn fx:id="idEditableColumn" minWidth="133" text="管理员编号"/>
                        <JFXTreeTableColumn fx:id="userNameEditableColumn" minWidth="133" text="用户名"/>
                        <JFXTreeTableColumn fx:id="phoneNumberEditableColumn" minWidth="133" text="联系电话"/>
                    </columns>

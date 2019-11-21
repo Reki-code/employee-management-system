@@ -15,7 +15,7 @@ public class User {
     private static User currentUser;
     private static final String TABLE_NAME = "_User";
 
-    static User getCurrentUser() {
+    public static User getCurrentUser() {
         return currentUser;
     }
 

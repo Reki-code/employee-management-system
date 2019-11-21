@@ -1,5 +1,3 @@
-package UI;
-
 import UI.util.WindowUtil;
 import javafx.application.Application;
 import javafx.stage.Stage;
