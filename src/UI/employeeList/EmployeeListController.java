@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
+import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import data.Employee;
 import javafx.application.Platform;
@@ -19,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeTableColumn;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.function.Function;
@@ -49,10 +52,43 @@ public class EmployeeListController implements Initializable {
     private Label editableTreeTableViewCount;
     @FXML
     private JFXTextField searchField;
+    private ObservableList<EmployeeProperty> employeeData;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         new Thread(this::setupEmployeeTableView).start();
+    }
+
+    public void addEmployee(Employee employee) {
+        var employeeProp = new EmployeeProperty(employee);
+        try {
+            if (employee.insert()) {
+                employeeData.add(employeeProp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("插入失败");
+        }
+    }
+
+    @FXML
+    private void addEmployee() {
+        System.out.println("add");
+        addEmployee(new Employee(2189, "吴权清", "男", 21, "13133000557", "太原", "本科", 1212, LocalDate.of(2019, 11, 21)));
+    }
+
+    @FXML
+    private void delEmployee() {
+        System.out.println("del");
+        var employee = getSelectedValue().toEmployee();
+        try {
+            if (employee.delete()) {
+                employeeData.removeIf(e -> e.id.get() == employee.getId());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("删除失败");
+        }
     }
 
     private <T> void setupCellValueFactory(JFXTreeTableColumn<EmployeeProperty, T> column, Function<EmployeeProperty, ObservableValue<T>> mapper) {
@@ -66,18 +102,6 @@ public class EmployeeListController implements Initializable {
     }
 
     private void setupEmployeeTableView() {
-//        setupCellValueFactory(userNameEditableColumn, EmployeeProperty::usernameProperty);
-//        setupCellValueFactory(idEditableColumn, p -> p.id.asObject());
-//        final SimpleIntegerProperty id;
-//        final StringProperty name;
-//        final StringProperty gender;
-//        final SimpleIntegerProperty age;
-//        final StringProperty phoneNumber;
-//        final StringProperty residence;
-//        final StringProperty education;
-//        final SimpleIntegerProperty wage;
-//        final ObjectProperty<LocalDate> entryDate;
-
         setupCellValueFactory(idColumn, p -> p.id.asObject());
         setupCellValueFactory(nameColumn, EmployeeProperty::nameProperty);
         setupCellValueFactory(genderColumn, EmployeeProperty::genderProperty);
@@ -88,27 +112,53 @@ public class EmployeeListController implements Initializable {
         setupCellValueFactory(wageColumn, p -> p.wage.asObject());
         setupCellValueFactory(entryDateColumn, p -> p.entryDate);
 
-//        userNameEditableColumn.setCellFactory((TreeTableColumn<EmployeeProperty, String> param) -> new GenericEditableTreeTableCell<>(
-//                new TextFieldEditorBuilder()));
-//        userNameEditableColumn.setOnEditCommit((TreeTableColumn.CellEditEvent<EmployeeProperty, String> t) -> {
-//            if (!t.getOldValue().equals(t.getNewValue())) {
-//                var userProperty = t.getRowValue().getValue();
-//                User.updateUserDetail("username", t.getNewValue(), userProperty.id.get());
-//                userProperty.username.set(t.getNewValue());
-//            }
-//        });
+        idColumn.setEditable(false);
+        nameColumn.setCellFactory((TreeTableColumn<EmployeeProperty, String> param) -> new GenericEditableTreeTableCell<>(
+                new TextFieldEditorBuilder()));
+        nameColumn.setOnEditCommit((TreeTableColumn.CellEditEvent<EmployeeProperty, String> t) -> {
+            if (!t.getOldValue().equals(t.getNewValue())) {
+                var employeeProperty = t.getRowValue().getValue();
+                employeeProperty.name.set(t.getNewValue());
+                try {
+                    var employee = employeeProperty.toEmployee();
+                    if (!employee.save()) {
+                        employeeProperty.name.set(t.getOldValue());
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println("保存失败");
+                }
+            }
+        });
+
+        genderColumn.setCellFactory((TreeTableColumn<EmployeeProperty, String> param) -> new GenericEditableTreeTableCell<>(
+                new TextFieldEditorBuilder()));
+        genderColumn.setOnEditCommit((TreeTableColumn.CellEditEvent<EmployeeProperty, String> t) -> {
+            if (!t.getOldValue().equals(t.getNewValue())) {
+                var employeeProperty = t.getRowValue().getValue();
+                employeeProperty.gender.set(t.getNewValue());
+                try {
+                    var employee = employeeProperty.toEmployee();
+                    if (!employee.save()) {
+                        employeeProperty.gender.set(t.getOldValue());
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println("保存失败");
+                }
+            }
+        });
 
         editableTreeTableView.setShowRoot(false);
         editableTreeTableView.setEditable(true);
-        final ObservableList<EmployeeProperty> employeeData = getEmployeeData();
+        employeeData = getEmployeeData();
         Platform.runLater(() -> {
             editableTreeTableView.setRoot(new RecursiveTreeItem<>(employeeData, RecursiveTreeObject::getChildren));
             editableTreeTableViewCount.textProperty()
                     .bind(Bindings.createStringBinding(() -> "( " + editableTreeTableView.getCurrentItemsCount() + " ) ",
                             editableTreeTableView.currentItemsCountProperty()));
         });
-        searchField.textProperty()
-                .addListener(setupSearchField(editableTreeTableView));
+        searchField.textProperty().addListener(setupSearchField(editableTreeTableView));
     }
 
     private ChangeListener<String> setupSearchField(final JFXTreeTableView<EmployeeProperty> tableView) {
@@ -125,6 +175,10 @@ public class EmployeeListController implements Initializable {
                             || Integer.toString(employeeProperty.wage.get()).contains(newVal)
                             || employeeProperty.entryDate.toString().contains(newVal);
                 });
+    }
+
+    public EmployeeProperty getSelectedValue() {
+        return editableTreeTableView.getSelectionModel().getSelectedItem().getValue();
     }
 
     private ObservableList<EmployeeProperty> getEmployeeData() {
@@ -154,6 +208,10 @@ public class EmployeeListController implements Initializable {
             education = new SimpleStringProperty(employee.getEducation());
             wage = new SimpleIntegerProperty(employee.getWage());
             entryDate = new SimpleObjectProperty<>(employee.getEntryDate());
+        }
+
+        public Employee toEmployee() {
+            return new Employee(id.get(), name.get(), gender.get(), age.get(), phoneNumber.get(), residence.get(), education.get(), wage.get(), entryDate.get());
         }
 
         public int getId() {
@@ -262,6 +320,21 @@ public class EmployeeListController implements Initializable {
 
         public ObjectProperty<LocalDate> entryDateProperty() {
             return entryDate;
+        }
+
+        @Override
+        public String toString() {
+            return "EmployeeProperty{" +
+                    "id=" + id +
+                    ", name=" + name +
+                    ", gender=" + gender +
+                    ", age=" + age +
+                    ", phoneNumber=" + phoneNumber +
+                    ", residence=" + residence +
+                    ", education=" + education +
+                    ", wage=" + wage +
+                    ", entryDate=" + entryDate +
+                    '}';
         }
     }
 }

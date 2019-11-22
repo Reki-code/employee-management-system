@@ -51,3 +51,13 @@
 .split-pane:horizontal > .split-pane-divider {
     -fx-background-color: transparent;
 }
+
+.jfx-button {
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #D4D7D9;
+    /*-fx-background-color: #0076FF;*/
+    -fx-font-family: "Noto Sans CJK SC";
+    -fx-font-size: 1.7em;
+    -fx-text-fill: #0076FF;
+}

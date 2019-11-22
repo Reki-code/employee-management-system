@@ -10,6 +10,7 @@ import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import workbench.moudle.AddEmployeeModule;
 import workbench.moudle.EmployeeModule;
 import workbench.moudle.ListUserModule;
 import workbench.moudle.ProfileModule;
@@ -19,12 +20,14 @@ public class MainWorkbench {
     private WorkbenchModule profileModule = new ProfileModule();
     private WorkbenchModule listUserModule = new ListUserModule();
     private WorkbenchModule employeeModule = new EmployeeModule();
+    private WorkbenchModule addEmployeeModule = new AddEmployeeModule();
 
     public Workbench buildWorkbench() {
         workbench = Workbench.builder(
                 profileModule,
                 listUserModule,
-                employeeModule
+                employeeModule,
+                addEmployeeModule
         )
                 .modulesPerPage(6)
                 .toolbarLeft(
@@ -52,6 +55,7 @@ public class MainWorkbench {
         var employeeInfo = new MenuItem("职工信息", new FontAwesomeIconView(FontAwesomeIcon.GROUP));
         employeeInfo.setOnAction(event -> workbench.openModule(employeeModule));
         var employeeAdd = new MenuItem("添加职工信息", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_PLUS));
+        employeeAdd.setOnAction(event -> workbench.openModule(addEmployeeModule));
         var employeeDel = new MenuItem("删除职工信息", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_MINUS));
 
         return new ToolbarItem("职工", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_MULTIPLE),

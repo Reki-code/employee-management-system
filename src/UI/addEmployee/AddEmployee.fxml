@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="511.0" prefWidth="493.0" stylesheets="@AddEmployee.css"
+            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="UI.addEmployee.AddEmployeeController">
+    <children>
+        <HBox alignment="TOP_CENTER" layoutX="85.0" layoutY="-26.0" prefHeight="495.0" prefWidth="680.0" spacing="6.0"
+              AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+              AnchorPane.topAnchor="20.0">
+            <children>
+                <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="2.0">
+                    <children>
+                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="职工号" textAlignment="RIGHT"/>
+                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="姓名" textAlignment="RIGHT"/>
+                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="性别" textAlignment="RIGHT"/>
+                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="年龄" textAlignment="RIGHT"/>
+                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="电话" textAlignment="RIGHT"/>
+                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="住址" textAlignment="RIGHT"/>
+                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="学历" textAlignment="RIGHT"/>
+                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="工资" textAlignment="RIGHT"/>
+                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="入职时间" textAlignment="RIGHT"/>
+                    </children>
+                </VBox>
+                <VBox prefHeight="389.0" prefWidth="239.0" spacing="2.0">
+                    <children>
+                        <JFXTextField fx:id="id"/>
+                        <JFXTextField/>
+                        <JFXTextField/>
+                        <JFXTextField/>
+                        <JFXTextField/>
+                        <JFXTextField/>
+                        <JFXTextField/>
+                        <JFXTextField/>
+                        <JFXDatePicker defaultColor="#006f8f"/>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <JFXButton fx:id="addButton" layoutX="137.0" layoutY="406.0" prefHeight="43.0" prefWidth="109.0" text="submit"/>
+    </children>
+</AnchorPane>
