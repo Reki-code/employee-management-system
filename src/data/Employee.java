@@ -18,6 +18,8 @@ public class Employee {
     private int wage;
     private LocalDate entryDate;
 
+    private static String[] educations = {"小学", "初中", "高中", "专科", "本科", "研究生"};
+
     private static DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
 
     public Employee(int id, String name, String gender, int age, String phoneNumber, String residence, String education, int wage, LocalDate entryDate) {
@@ -175,6 +177,11 @@ public class Employee {
     public void setEntryDate(LocalDate entryDate) {
         this.entryDate = entryDate;
     }
+
+    public static String[] getEducations() {
+        return educations;
+    }
+
 
     @Override
     public String toString() {

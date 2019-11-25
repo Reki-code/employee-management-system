@@ -1,5 +1,6 @@
 package workbench.moudle;
 
+import com.dlsc.workbenchfx.Workbench;
 import com.dlsc.workbenchfx.model.WorkbenchModule;
 import com.jfoenix.controls.JFXSpinner;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -37,7 +38,8 @@ public class CustomModule extends WorkbenchModule {
     }
 
     @Override
-    public Node activate() {
+    public void init(Workbench workbench) {
+        super.init(workbench);
         new Thread(() -> {
             var content = loadFxml();
             if (content == null) {
@@ -55,10 +57,14 @@ public class CustomModule extends WorkbenchModule {
                 rootPane.getChildren().add(finalContent);
             });
         }).start();
+    }
+
+    @Override
+    public Node activate() {
         return rootPane;
     }
 
-    private Pane loadFxml() {
+    protected Pane loadFxml() {
         Pane parent = null;
         try {
             parent = FXMLLoader.load(getClass().getResource(fxml));
@@ -68,4 +74,7 @@ public class CustomModule extends WorkbenchModule {
         return parent;
     }
 
+    public String getFxml() {
+        return fxml;
+    }
 }

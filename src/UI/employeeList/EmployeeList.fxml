@@ -40,6 +40,9 @@
                 <opaqueInsets>
                     <Insets/>
                 </opaqueInsets>
+                <VBox.margin>
+                    <Insets top="10.0"/>
+                </VBox.margin>
             </HBox>
         </children>
     </VBox>
@@ -52,4 +55,5 @@
         <Label fx:id="editableTreeTableViewCount" styleClass="title"/>
         <JFXTextField fx:id="searchField" prefHeight="34.0" prefWidth="226.0" promptText="搜索..."/>
     </HBox>
+    <JFXButton layoutX="915.0" layoutY="19.0" onAction="#refresh" text="刷新" AnchorPane.rightAnchor="20.0"/>
 </AnchorPane>

@@ -10,3 +10,23 @@
     -fx-font-size: 1.7em;
     -fx-text-fill: #0076FF;
 }
+
+.jfx-radio-button {
+    -jfx-selected-color: #0076FF;
+}
+
+.jfx-text-field {
+    -jfx-focus-color: #0076FF;
+}
+
+.jfx-combo-box {
+    -jfx-focus-color: #0076FF;
+}
+
+.jfx-date-picker {
+    -jfx-default-color: #0076FF;
+}
+
+.label {
+    -fx-fill: #0076FF;
+}

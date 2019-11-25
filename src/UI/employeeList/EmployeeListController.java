@@ -187,6 +187,12 @@ public class EmployeeListController implements Initializable {
         return employeeData;
     }
 
+    @FXML
+    public void refresh() {
+        System.out.println("refresh");
+        new Thread(this::setupEmployeeTableView).start();
+    }
+
     private static final class EmployeeProperty extends RecursiveTreeObject<EmployeeProperty> {
         final SimpleIntegerProperty id;
         final StringProperty name;

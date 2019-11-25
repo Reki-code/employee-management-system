@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXTextField;
 import data.User;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
@@ -18,20 +19,35 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class SignInAndSignUpWindowController {
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
-    public JFXTextField loginUsername;
-    public JFXPasswordField loginPassword;
-    public JFXTextField signUpPhone;
-    public JFXTextField signUpUsername;
-    public JFXPasswordField signUpPassword;
-    public JFXPasswordField signUpConfirmPassword;
-    public AnchorPane slideAnchor;
-    public AnchorPane rootPane;
-    public JFXButton signInBtn;
-    public JFXButton signUpBtn;
-    public JFXSpinner signInSpinner;
-    public JFXSpinner signUpSpinner;
+public class SignInAndSignUpWindowController implements Initializable {
+    @FXML
+    private JFXTextField loginUsername;
+    @FXML
+    private JFXPasswordField loginPassword;
+    @FXML
+    private JFXTextField signUpPhone;
+    @FXML
+    private JFXTextField signUpUsername;
+    @FXML
+    private JFXPasswordField signUpPassword;
+    @FXML
+    private JFXPasswordField signUpConfirmPassword;
+    @FXML
+    private AnchorPane slideAnchor;
+    @FXML
+    private AnchorPane rootPane;
+    @FXML
+    private JFXButton signInBtn;
+    @FXML
+    private JFXButton signUpBtn;
+    @FXML
+    private JFXSpinner signInSpinner;
+    @FXML
+    private JFXSpinner signUpSpinner;
 
     private SlideState slideState;
     private enum SlideState {
@@ -39,8 +55,11 @@ public class SignInAndSignUpWindowController {
         RIGHT
     }
 
-    public SignInAndSignUpWindowController() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         slideState = SlideState.RIGHT;
+        var prefs = Preferences.userNodeForPackage(data.User.class);
+        loginUsername.setText(prefs.get("username", ""));
     }
 
     @FXML
@@ -53,6 +72,8 @@ public class SignInAndSignUpWindowController {
         new Thread(() -> {
             if (user.signIn() == User.LoginStatus.SUCCESS) {
                 Platform.runLater(this::startMainWindow);
+                var prefs = Preferences.userNodeForPackage(data.User.class);
+                prefs.put("username", user.getUsername());
             } else {
                 Platform.runLater(() -> {
                     var alert = new InfoDialog(Alert.AlertType.INFORMATION, "密码错误", new ButtonType("好的"));

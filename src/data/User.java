@@ -19,8 +19,54 @@ public class User {
         return currentUser;
     }
 
+    public static void updateUserDetail(String column, String newValue, int id) {
+        String sql = "UPDATE " + TABLE_NAME + " SET " + column + " = ? WHERE id = ?";
+        try (var conn = databaseHandler.getConnection()) {
+            var preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, newValue);
+            preparedStatement.setInt(2, id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean findUsername(String name) {
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE username = ?";
+        try (var conn = databaseHandler.getConnection()) {
+            var preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, name);
+            var resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static List<User> getUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM " + TABLE_NAME;
+        try (var conn = databaseHandler.getConnection()) {
+            var preparedStatement = conn.prepareStatement(sql);
+            var resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                var user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setPhoneNumber(resultSet.getString("phoneNumber"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
     public boolean signUp() {
-        String sql = "INSERT INTO _User(username, password, phoneNumber) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO " + TABLE_NAME + "(username, password, phoneNumber) VALUES (?, ?, ?)";
         try (var conn = databaseHandler.getConnection()){
             var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, username);
@@ -45,7 +91,7 @@ public class User {
 
     // login by username and password
     public LoginStatus signIn() {
-        String sql = "SELECT * FROM _User WHERE username = ? AND password = ?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE username = ? AND password = ?";
         LoginStatus loginStatus = LoginStatus.ERROR;
         if (!username.isEmpty() || !password.isEmpty()) {
             try (var conn = databaseHandler.getConnection()){
@@ -68,7 +114,7 @@ public class User {
     }
 
     public boolean save() {
-        String sql = "UPDATE _User SET username = ?, password = ?, phoneNumber = ? WHERE id = ?";
+        String sql = "UPDATE " + TABLE_NAME + " SET username = ?, password = ?, phoneNumber = ? WHERE id = ?";
         try (var conn = databaseHandler.getConnection()){
             var preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, username);
@@ -85,55 +131,8 @@ public class User {
         return false;
     }
 
-    public static void updateUserDetail(String column, String newValue, int id) {
-        String sql = "UPDATE _User SET " + column + " = ? WHERE id = ?";
-        try (var conn = databaseHandler.getConnection()){
-            var preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, newValue);
-            preparedStatement.setInt(2, id);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static boolean findUsername(String name) {
-        String sql = "SELECT * FROM _User WHERE username = ?";
-        try (var conn = databaseHandler.getConnection()){
-            var preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, name);
-            var resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public static List<User> getUsers() {
-        List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM _User";
-        try (var conn = databaseHandler.getConnection()){
-            var preparedStatement = conn.prepareStatement(sql);
-            var resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                var user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setUsername(resultSet.getString("username"));
-                user.setPhoneNumber(resultSet.getString("phoneNumber"));
-                users.add(user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users;
-    }
-
     @Override
     public String toString() {
-
         return super.toString() + String.format("{id:%d, username:%s, password:%s, phoneNumber:%s}", getId(), getUsername(), getPassword(), getPhoneNumber());
     }
 

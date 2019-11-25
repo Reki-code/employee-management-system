@@ -10,10 +10,9 @@ import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import workbench.moudle.AddEmployeeModule;
-import workbench.moudle.EmployeeModule;
-import workbench.moudle.ListUserModule;
-import workbench.moudle.ProfileModule;
+import workbench.moudle.*;
+
+import java.util.prefs.Preferences;
 
 public class MainWorkbench {
     private Workbench workbench;
@@ -21,13 +20,15 @@ public class MainWorkbench {
     private WorkbenchModule listUserModule = new ListUserModule();
     private WorkbenchModule employeeModule = new EmployeeModule();
     private WorkbenchModule addEmployeeModule = new AddEmployeeModule();
+    private WorkbenchModule averageAnalysisModule = new AverageAnalysisModule();
 
     public Workbench buildWorkbench() {
         workbench = Workbench.builder(
                 profileModule,
                 listUserModule,
                 employeeModule,
-                addEmployeeModule
+                addEmployeeModule,
+                averageAnalysisModule
         )
                 .modulesPerPage(6)
                 .toolbarLeft(
@@ -66,10 +67,12 @@ public class MainWorkbench {
     }
 
     private ToolbarItem statisticsMenu() {
-        var ageStatistics = new MenuItem("年龄分布", new MaterialDesignIconView(MaterialDesignIcon.MARGIN));
-        var educationStatistics = new MenuItem("文化程度分布", new MaterialDesignIconView(MaterialDesignIcon.MARGIN));
+        var averageStatistics = new MenuItem("平均值", new MaterialDesignIconView(MaterialDesignIcon.MARGIN));
+        var ageStatistics = new MenuItem("年龄段", new MaterialDesignIconView(MaterialDesignIcon.MARGIN));
+        var educationStatistics = new MenuItem("文化程度", new MaterialDesignIconView(MaterialDesignIcon.MARGIN));
 
         return new ToolbarItem("统计", new MaterialDesignIconView(MaterialDesignIcon.MARGIN),
+                averageStatistics,
                 ageStatistics,
                 educationStatistics
         );
@@ -87,12 +90,18 @@ public class MainWorkbench {
     private ToolbarItem userMenu() {
         var userInfo = new MenuItem("我的信息", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_CARD_DETAILS));
         userInfo.setOnAction(event -> workbench.openModule(profileModule));
+        var changePassword = new MenuItem("修改密码", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_CARD_DETAILS));
         var logout = new MenuItem("退出");
         logout.setGraphic(new MaterialDesignIconView(MaterialDesignIcon.LOGOUT_VARIANT));
-        logout.setOnAction(event -> System.exit(0));
+        logout.setOnAction(event -> {
+            var prefs = Preferences.userNodeForPackage(data.User.class);
+            prefs.remove("username");
+            System.exit(0);
+        });
 
         return new ToolbarItem(username(), new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_CIRCLE),
                 userInfo,
+                changePassword,
                 new SeparatorMenuItem(),
                 logout
         );

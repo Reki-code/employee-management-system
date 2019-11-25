@@ -1,0 +1,20 @@
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-effect: dropshadow(gaussian, gray, 50, 0, 0, 0);
+}
+
+.card:hover {
+}
+
+.title {
+    -fx-font-family: "Noto Sans CJK SC";
+    -fx-fill: #BDBDBD;
+    -fx-font-size: 2em;
+}
+
+.avg {
+    -fx-font-weight: 900;
+    -fx-font-size: 5em;
+}
