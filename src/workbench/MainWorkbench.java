@@ -18,10 +18,12 @@ public class MainWorkbench {
     private Workbench workbench;
     private WorkbenchModule profileModule = new ProfileModule();
     private WorkbenchModule listUserModule = new ListUserModule();
-    private WorkbenchModule employeeModule = new EmployeeModule();
+    private EmployeeModule employeeModule = new EmployeeModule();
     private WorkbenchModule addEmployeeModule = new AddEmployeeModule();
     private WorkbenchModule averageAnalysisModule = new AverageAnalysisModule();
     private WorkbenchModule ageStatisticsModule = new AgeStatisticsModule();
+    private WorkbenchModule searchEmployeeModule = new SearchEmployeeModule();
+    private WorkbenchModule changePasswordModule = new ChangePasswordModule();
 
     public Workbench buildWorkbench() {
         workbench = Workbench.builder(
@@ -30,7 +32,9 @@ public class MainWorkbench {
                 employeeModule,
                 addEmployeeModule,
                 averageAnalysisModule,
-                ageStatisticsModule
+                ageStatisticsModule,
+                searchEmployeeModule,
+                changePasswordModule
         )
                 .modulesPerPage(6)
                 .toolbarLeft(
@@ -59,18 +63,18 @@ public class MainWorkbench {
         employeeInfo.setOnAction(event -> workbench.openModule(employeeModule));
         var employeeAdd = new MenuItem("添加职工信息", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_PLUS));
         employeeAdd.setOnAction(event -> workbench.openModule(addEmployeeModule));
-        var employeeDel = new MenuItem("删除职工信息", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_MINUS));
 
         return new ToolbarItem("职工", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_MULTIPLE),
                 employeeInfo,
-                employeeAdd,
-                employeeDel
+                employeeAdd
         );
     }
 
     private ToolbarItem statisticsMenu() {
         var averageStatistics = new MenuItem("平均值", new MaterialDesignIconView(MaterialDesignIcon.MARGIN));
+        averageStatistics.setOnAction(event -> workbench.openModule(averageAnalysisModule));
         var ageStatistics = new MenuItem("年龄段", new MaterialDesignIconView(MaterialDesignIcon.MARGIN));
+        ageStatistics.setOnAction(event -> workbench.openModule(ageStatisticsModule));
         var educationStatistics = new MenuItem("文化程度", new MaterialDesignIconView(MaterialDesignIcon.MARGIN));
 
         return new ToolbarItem("统计", new MaterialDesignIconView(MaterialDesignIcon.MARGIN),
@@ -82,7 +86,7 @@ public class MainWorkbench {
 
     private ToolbarItem settingMenu() {
         var databaseSetting = new MenuItem("数据库设置", new MaterialDesignIconView(MaterialDesignIcon.DATABASE));
-        databaseSetting.setOnAction(event -> workbench.showConfirmationDialog("title", "message", System.out::println));
+//        databaseSetting.setOnAction(event -> workbench.showDialog(databaseSettingDialog()));
 
         return new ToolbarItem("设置", new MaterialDesignIconView(MaterialDesignIcon.SETTINGS),
                 databaseSetting
@@ -92,7 +96,8 @@ public class MainWorkbench {
     private ToolbarItem userMenu() {
         var userInfo = new MenuItem("我的信息", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_CARD_DETAILS));
         userInfo.setOnAction(event -> workbench.openModule(profileModule));
-        var changePassword = new MenuItem("修改密码", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_CARD_DETAILS));
+        var changePassword = new MenuItem("修改密码", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_SETTINGS_VARIANT));
+        changePassword.setOnAction(event -> workbench.openModule(changePasswordModule));
         var logout = new MenuItem("退出");
         logout.setGraphic(new MaterialDesignIconView(MaterialDesignIcon.LOGOUT_VARIANT));
         logout.setOnAction(event -> {
@@ -108,4 +113,5 @@ public class MainWorkbench {
                 logout
         );
     }
+
 }

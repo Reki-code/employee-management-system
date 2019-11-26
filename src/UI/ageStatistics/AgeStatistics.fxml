@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="551.0" prefWidth="809.0" stylesheets="@AgeStatistics.css"
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="682.0" prefWidth="1024.0" stylesheets="@AgeStatistics.css"
             xmlns="http://javafx.com/javafx/11.0.1" fx:controller="UI.ageStatistics.AgeStatisticsController">
-    <BarChart fx:id="barChart" layoutX="40.0" layoutY="32.0" prefHeight="488.0" prefWidth="715.0">
+    <BarChart fx:id="barChart" layoutX="113.0" layoutY="74.0" prefHeight="682.0" prefWidth="1024.0"
+              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
         <xAxis>
             <CategoryAxis label="年龄段" side="BOTTOM"/>
         </xAxis>

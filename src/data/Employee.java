@@ -34,6 +34,13 @@ public class Employee {
         this.entryDate = entryDate;
     }
 
+    /**
+     * 删除指定职工
+     *
+     * @param id 职工编号
+     * @return true 删除成功, false 没有该职工
+     * @throws SQLException 数据库删除错误
+     */
     public static boolean delete(int id) throws SQLException {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         try (var conn = databaseHandler.getConnection()) {
@@ -43,6 +50,10 @@ public class Employee {
         }
     }
 
+    /**
+     * 从数据库中获取所有职工信息
+     * @return 职工列表
+     */
     public static List<Employee> getEmployees() {
         List<Employee> employees = new ArrayList<>();
         String sql = "SELECT * FROM " + TABLE_NAME;
@@ -68,6 +79,11 @@ public class Employee {
         return employees;
     }
 
+    /**
+     * 向数据库中插入职工
+     * @return true 插入成功, false 插入失败
+     * @throws SQLException 数据库插入错误
+     */
     public boolean insert() throws SQLException {
         String sql = "INSERT INTO " + TABLE_NAME + "(id, name, gender, age, phoneNumber, residence, education, wage, entryDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (var conn = databaseHandler.getConnection()) {
@@ -85,10 +101,20 @@ public class Employee {
         }
     }
 
+    /**
+     * 从数据库中删除职工信息
+     * @return true 删除成功, false 删除失败
+     * @throws SQLException 数据库删除错误
+     */
     public boolean delete() throws SQLException {
-        return delete(id);
+        return delete(getId());
     }
 
+    /**
+     * 保存职工信息到数据库
+     * @return true 保存成功, false 保存失败
+     * @throws SQLException 数据库保存错误
+     */
     public boolean save() throws SQLException {
         String sql = "UPDATE " + TABLE_NAME + " SET name = ?, gender = ?, age = ?, phoneNumber = ?, residence = ?, education = ?, wage = ?, entryDate = ? WHERE id = ?";
         try (var conn = databaseHandler.getConnection()) {

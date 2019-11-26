@@ -1,6 +1,7 @@
 package UI.ageStatistics;
 
 import data.Employee;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -25,7 +26,7 @@ public class AgeStatisticsController implements Initializable {
         Map<String, Long> generation = Employee.getEmployees().stream()
                 .collect(Collectors.groupingBy(this::getGeneration, Collectors.counting()));
         series.getData().addAll(generation.keySet().stream().map(k -> new XYChart.Data<>(k, generation.get(k))).collect(Collectors.toList()));
-        barChart.getData().add(series);
+        Platform.runLater(() -> barChart.getData().add(series));
     }
 
     private String getGeneration(Employee employee) {

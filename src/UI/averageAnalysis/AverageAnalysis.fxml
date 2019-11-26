@@ -5,27 +5,27 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="633.0" prefWidth="988.0" stylesheets="@AverageAnalysis.css"
             xmlns="http://javafx.com/javafx/11.0.1" fx:controller="UI.averageAnalysis.AverageAnalysisController">
     <children>
-        <AnchorPane layoutX="60.0" layoutY="67.0" prefHeight="250.0" prefWidth="250.0" styleClass="card">
+        <AnchorPane layoutX="28.0" layoutY="67.0" prefHeight="280.0" prefWidth="280.0" styleClass="card">
             <children>
-                <Label alignment="CENTER" layoutX="36.0" layoutY="164.0" prefHeight="65.0" prefWidth="179.0"
+                <Label alignment="CENTER" layoutX="51.0" layoutY="164.0" prefHeight="65.0" prefWidth="179.0"
                        styleClass="title" text="平均年龄"/>
-                <Label fx:id="age" alignment="CENTER" layoutX="36.0" layoutY="14.0" prefHeight="147.0" prefWidth="179.0"
+                <Label fx:id="age" alignment="CENTER" layoutX="51.0" layoutY="14.0" prefHeight="147.0" prefWidth="179.0"
                        styleClass="avg" text="21"/>
             </children>
         </AnchorPane>
-        <AnchorPane layoutX="369.0" layoutY="67.0" prefHeight="250.0" prefWidth="250.0" styleClass="card">
+        <AnchorPane layoutX="334.0" layoutY="67.0" prefHeight="280.0" prefWidth="280.0" styleClass="card">
             <children>
-                <Label alignment="CENTER" layoutX="36.0" layoutY="164.0" prefHeight="65.0" prefWidth="179.0"
+                <Label alignment="CENTER" layoutX="51.0" layoutY="164.0" prefHeight="65.0" prefWidth="179.0"
                        styleClass="title" text="平均工资"/>
-                <Label fx:id="wage" alignment="CENTER" layoutX="36.0" layoutY="14.0" prefHeight="147.0"
+                <Label fx:id="wage" alignment="CENTER" layoutX="51.0" layoutY="14.0" prefHeight="147.0"
                        prefWidth="179.0" styleClass="avg" text="21"/>
             </children>
         </AnchorPane>
-        <AnchorPane layoutX="675.0" layoutY="67.0" prefHeight="250.0" prefWidth="250.0" styleClass="card">
+        <AnchorPane layoutX="644.0" layoutY="67.0" prefHeight="280.0" prefWidth="280.0" styleClass="card">
             <children>
-                <Label alignment="CENTER" layoutX="36.0" layoutY="164.0" prefHeight="65.0" prefWidth="179.0"
+                <Label alignment="CENTER" layoutX="51.0" layoutY="164.0" prefHeight="65.0" prefWidth="179.0"
                        styleClass="title" text="平均工龄"/>
-                <Label fx:id="seniority" alignment="CENTER" layoutX="36.0" layoutY="14.0" prefHeight="147.0"
+                <Label fx:id="seniority" alignment="CENTER" layoutX="51.0" layoutY="14.0" prefHeight="147.0"
                        prefWidth="179.0" styleClass="avg" text="21"/>
             </children>
         </AnchorPane>

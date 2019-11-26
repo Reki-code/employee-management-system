@@ -1,0 +1,18 @@
+.root {
+    -fx-font-family: "Noto Sans CJK SC";
+}
+
+.jfx-text-field {
+    -jfx-focus-color: #0076FF;
+}
+
+.jfx-combo-box {
+    -jfx-focus-color: #0076FF;
+}
+
+.jfx-button {
+    -fx-background-color: #0076FF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16pt;
+}

@@ -30,11 +30,6 @@
             </JFXTreeTableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="394.0">
                 <children>
-                    <JFXButton onAction="#addEmployee" text="添加">
-                        <HBox.margin>
-                            <Insets right="20.0"/>
-                        </HBox.margin>
-                    </JFXButton>
                     <JFXButton onAction="#delEmployee" text="删除"/>
                 </children>
                 <opaqueInsets>

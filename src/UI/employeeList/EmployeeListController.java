@@ -27,7 +27,6 @@ import java.util.ResourceBundle;
 import java.util.function.Function;
 
 public class EmployeeListController implements Initializable {
-
     @FXML
     private JFXTreeTableColumn<EmployeeProperty, Integer> idColumn;
     @FXML
@@ -59,27 +58,8 @@ public class EmployeeListController implements Initializable {
         new Thread(this::setupEmployeeTableView).start();
     }
 
-    public void addEmployee(Employee employee) {
-        var employeeProp = new EmployeeProperty(employee);
-        try {
-            if (employee.insert()) {
-                employeeData.add(employeeProp);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("插入失败");
-        }
-    }
-
-    @FXML
-    private void addEmployee() {
-        System.out.println("add");
-        addEmployee(new Employee(2189, "吴权清", "男", 21, "13133000557", "太原", "本科", 1212, LocalDate.of(2019, 11, 21)));
-    }
-
     @FXML
     private void delEmployee() {
-        System.out.println("del");
         var employee = getSelectedValue().toEmployee();
         try {
             if (employee.delete()) {
@@ -189,7 +169,6 @@ public class EmployeeListController implements Initializable {
 
     @FXML
     public void refresh() {
-        System.out.println("refresh");
         new Thread(this::setupEmployeeTableView).start();
     }
 
