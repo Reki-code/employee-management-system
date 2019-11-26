@@ -21,6 +21,7 @@ public class MainWorkbench {
     private WorkbenchModule employeeModule = new EmployeeModule();
     private WorkbenchModule addEmployeeModule = new AddEmployeeModule();
     private WorkbenchModule averageAnalysisModule = new AverageAnalysisModule();
+    private WorkbenchModule ageStatisticsModule = new AgeStatisticsModule();
 
     public Workbench buildWorkbench() {
         workbench = Workbench.builder(
@@ -28,7 +29,8 @@ public class MainWorkbench {
                 listUserModule,
                 employeeModule,
                 addEmployeeModule,
-                averageAnalysisModule
+                averageAnalysisModule,
+                ageStatisticsModule
         )
                 .modulesPerPage(6)
                 .toolbarLeft(
