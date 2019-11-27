@@ -2,6 +2,7 @@ package UI.averageAnalysis;
 
 import data.Employee;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -35,5 +36,9 @@ public class AverageAnalysisController implements Initializable {
             this.wage.setText(String.valueOf(wage));
             this.seniority.setText(String.valueOf(seniority));
         });
+    }
+
+    public void refresh(ActionEvent event) {
+        new Thread(this::calculateAverage).start();
     }
 }
