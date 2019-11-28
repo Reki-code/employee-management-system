@@ -1,6 +1,7 @@
 package UI.employeeList;
 
 import UI.dialog.ConfirmDialog;
+import UI.util.EmployeeProperty;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
@@ -11,7 +12,6 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import data.Employee;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -76,7 +76,7 @@ public class EmployeeListController implements Initializable {
     private void delEmployee(Employee employee) {
         try {
             if (employee.delete()) {
-                employeeData.removeIf(e -> e.id.get() == employee.getId());
+                employeeData.removeIf(e -> e.getId() == employee.getId());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,15 +95,15 @@ public class EmployeeListController implements Initializable {
     }
 
     private void setupEmployeeTableView() {
-        setupCellValueFactory(idColumn, p -> p.id.asObject());
+        setupCellValueFactory(idColumn, p -> p.idProperty().asObject());
         setupCellValueFactory(nameColumn, EmployeeProperty::nameProperty);
         setupCellValueFactory(genderColumn, EmployeeProperty::genderProperty);
-        setupCellValueFactory(ageColumn, p -> p.age.asObject());
+        setupCellValueFactory(ageColumn, p -> p.ageProperty().asObject());
         setupCellValueFactory(phoneNumberColumn, EmployeeProperty::phoneNumberProperty);
         setupCellValueFactory(residenceColumn, EmployeeProperty::residenceProperty);
         setupCellValueFactory(educationColumn, EmployeeProperty::educationProperty);
-        setupCellValueFactory(wageColumn, p -> p.wage.asObject());
-        setupCellValueFactory(entryDateColumn, p -> p.entryDate);
+        setupCellValueFactory(wageColumn, p -> p.wageProperty().asObject());
+        setupCellValueFactory(entryDateColumn, EmployeeProperty::entryDateProperty);
 
         idColumn.setEditable(false);
         nameColumn.setCellFactory((TreeTableColumn<EmployeeProperty, String> param) -> new GenericEditableTreeTableCell<>(
@@ -141,8 +141,8 @@ public class EmployeeListController implements Initializable {
             return employee;
         }));
 
-        educationColumn.setCellFactory(((TreeTableColumn<EmployeeProperty, String> param) ->
-                new ComboBoxEditingCell(Employee.getEducations())));
+        educationColumn.setCellFactory((TreeTableColumn<EmployeeProperty, String> param) ->
+                new ComboBoxEditingCell(Employee.getEducations()));
         educationColumn.setOnEditCommit(t -> saveEmployeeToDatabase(t, employee -> {
             employee.setEducation(t.getNewValue());
             return employee;
@@ -155,8 +155,8 @@ public class EmployeeListController implements Initializable {
             return employee;
         }));
 
-        entryDateColumn.setCellFactory(((TreeTableColumn<EmployeeProperty, LocalDate> param) ->
-                new DatePickerEditingCell()));
+        entryDateColumn.setCellFactory((TreeTableColumn<EmployeeProperty, LocalDate> param) ->
+                new DatePickerEditingCell());
         entryDateColumn.setOnEditCommit(t -> saveEmployeeToDatabase(t, employee -> {
             employee.setEntryDate(t.getNewValue());
             return employee;
@@ -194,19 +194,19 @@ public class EmployeeListController implements Initializable {
         return (o, oldVal, newVal) ->
                 tableView.setPredicate(employeeProp -> {
                     final EmployeeProperty employeeProperty = employeeProp.getValue();
-                    return Integer.toString(employeeProperty.id.get()).contains(newVal)
-                            || employeeProperty.name.get().contains(newVal)
-                            || employeeProperty.gender.get().contains(newVal)
-                            || Integer.toString(employeeProperty.age.get()).contains(newVal)
-                            || employeeProperty.phoneNumber.get().contains(newVal)
-                            || employeeProperty.residence.get().contains(newVal)
-                            || employeeProperty.education.get().contains(newVal)
-                            || Integer.toString(employeeProperty.wage.get()).contains(newVal)
-                            || employeeProperty.entryDate.toString().contains(newVal);
+                    return Integer.toString(employeeProperty.getId()).contains(newVal)
+                            || employeeProperty.getName().contains(newVal)
+                            || employeeProperty.getGender().contains(newVal)
+                            || Integer.toString(employeeProperty.getAge()).contains(newVal)
+                            || employeeProperty.getPhoneNumber().contains(newVal)
+                            || employeeProperty.getResidence().contains(newVal)
+                            || employeeProperty.getEducation().contains(newVal)
+                            || Integer.toString(employeeProperty.getWage()).contains(newVal)
+                            || employeeProperty.getEntryDate().toString().contains(newVal);
                 });
     }
 
-    public EmployeeProperty getSelectedValue() {
+    private EmployeeProperty getSelectedValue() {
         return editableTreeTableView.getSelectionModel().getSelectedItem().getValue();
     }
 
@@ -221,154 +221,4 @@ public class EmployeeListController implements Initializable {
         new Thread(this::setupEmployeeTableView).start();
     }
 
-    static final class EmployeeProperty extends RecursiveTreeObject<EmployeeProperty> {
-        final SimpleIntegerProperty id;
-        final StringProperty name;
-        final StringProperty gender;
-        final SimpleIntegerProperty age;
-        final StringProperty phoneNumber;
-        final StringProperty residence;
-        final StringProperty education;
-        final SimpleIntegerProperty wage;
-        final ObjectProperty<LocalDate> entryDate;
-
-        EmployeeProperty(Employee employee) {
-            id = new SimpleIntegerProperty(employee.getId());
-            name = new SimpleStringProperty(employee.getName());
-            gender = new SimpleStringProperty(employee.getGender());
-            age = new SimpleIntegerProperty(employee.getAge());
-            phoneNumber = new SimpleStringProperty(employee.getPhoneNumber());
-            residence = new SimpleStringProperty(employee.getResidence());
-            education = new SimpleStringProperty(employee.getEducation());
-            wage = new SimpleIntegerProperty(employee.getWage());
-            entryDate = new SimpleObjectProperty<>(employee.getEntryDate());
-        }
-
-        public Employee toEmployee() {
-            return new Employee(id.get(), name.get(), gender.get(), age.get(), phoneNumber.get(), residence.get(), education.get(), wage.get(), entryDate.get());
-        }
-
-        public int getId() {
-            return id.get();
-        }
-
-        public void setId(int id) {
-            this.id.set(id);
-        }
-
-        public SimpleIntegerProperty idProperty() {
-            return id;
-        }
-
-        public String getName() {
-            return name.get();
-        }
-
-        public void setName(String name) {
-            this.name.set(name);
-        }
-
-        public StringProperty nameProperty() {
-            return name;
-        }
-
-        public String getGender() {
-            return gender.get();
-        }
-
-        public void setGender(String gender) {
-            this.gender.set(gender);
-        }
-
-        public StringProperty genderProperty() {
-            return gender;
-        }
-
-        public int getAge() {
-            return age.get();
-        }
-
-        public void setAge(int age) {
-            this.age.set(age);
-        }
-
-        public SimpleIntegerProperty ageProperty() {
-            return age;
-        }
-
-        public String getPhoneNumber() {
-            return phoneNumber.get();
-        }
-
-        public void setPhoneNumber(String phoneNumber) {
-            this.phoneNumber.set(phoneNumber);
-        }
-
-        public StringProperty phoneNumberProperty() {
-            return phoneNumber;
-        }
-
-        public String getResidence() {
-            return residence.get();
-        }
-
-        public void setResidence(String residence) {
-            this.residence.set(residence);
-        }
-
-        public StringProperty residenceProperty() {
-            return residence;
-        }
-
-        public String getEducation() {
-            return education.get();
-        }
-
-        public void setEducation(String education) {
-            this.education.set(education);
-        }
-
-        public StringProperty educationProperty() {
-            return education;
-        }
-
-        public int getWage() {
-            return wage.get();
-        }
-
-        public void setWage(int wage) {
-            this.wage.set(wage);
-        }
-
-        public SimpleIntegerProperty wageProperty() {
-            return wage;
-        }
-
-        public LocalDate getEntryDate() {
-            return entryDate.get();
-        }
-
-        public void setEntryDate(LocalDate entryDate) {
-            this.entryDate.set(entryDate);
-        }
-
-        public ObjectProperty<LocalDate> entryDateProperty() {
-            return entryDate;
-        }
-
-        @Override
-        public String toString() {
-            return "EmployeeProperty{" +
-                    "id=" + id +
-                    ", name=" + name +
-                    ", gender=" + gender +
-                    ", age=" + age +
-                    ", phoneNumber=" + phoneNumber +
-                    ", residence=" + residence +
-                    ", education=" + education +
-                    ", wage=" + wage +
-                    ", entryDate=" + entryDate +
-                    '}';
-        }
-    }
 }

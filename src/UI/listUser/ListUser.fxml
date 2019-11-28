@@ -29,9 +29,6 @@
                    </columns>
                </JFXTreeTableView>
                <VBox>
-                   <JFXButton text="button"/>
-                   <JFXButton text="button"/>
-                   <JFXButton text="button"/>
                </VBox>
            </children>
        </HBox>

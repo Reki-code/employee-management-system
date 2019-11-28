@@ -1,11 +1,12 @@
 package UI.employeeList;
 
+import UI.util.EmployeeProperty;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeTableCell;
 
-public class ComboBoxEditingCell extends TreeTableCell<EmployeeListController.EmployeeProperty, String> {
+public class ComboBoxEditingCell extends TreeTableCell<EmployeeProperty, String> {
     private JFXComboBox<String> comboBox;
     private ObservableList<String> data;
 

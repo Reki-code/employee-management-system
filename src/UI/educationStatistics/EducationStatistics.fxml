@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="891.0"
             stylesheets="@EducationStatistics.css" xmlns="http://javafx.com/javafx/11.0.1"
             fx:controller="UI.educationStatistics.EducationStatisticsController">
-    <children>
-        <BarChart fx:id="barChart" layoutX="34.0" layoutY="36.0" AnchorPane.bottomAnchor="35.0"
-                  AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="35.0">
-            <xAxis>
-                <CategoryAxis label="文化程度" side="BOTTOM"/>
-            </xAxis>
-            <yAxis>
-                <NumberAxis label="人数" side="LEFT"/>
-            </yAxis>
-        </BarChart>
-    </children>
+   <children>
+      <PieChart fx:id="pieChart" labelLineLength="35.0" layoutX="98.0" layoutY="70.0" legendSide="LEFT"
+                AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0"
+                AnchorPane.topAnchor="35.0"/>
+   </children>
 </AnchorPane>

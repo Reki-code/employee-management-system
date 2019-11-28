@@ -1,5 +1,6 @@
 package UI.employeeList;
 
+import UI.util.EmployeeProperty;
 import com.jfoenix.controls.JFXDatePicker;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.paint.Color;
@@ -8,7 +9,7 @@ import javafx.util.StringConverter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class DatePickerEditingCell extends TreeTableCell<EmployeeListController.EmployeeProperty, LocalDate> {
+public class DatePickerEditingCell extends TreeTableCell<EmployeeProperty, LocalDate> {
     private JFXDatePicker datePicker;
     private StringConverter<LocalDate> datePickerConverter;
 

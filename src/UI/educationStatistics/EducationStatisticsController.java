@@ -4,8 +4,7 @@ import data.Employee;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.PieChart;
 
 import java.net.URL;
 import java.util.Map;
@@ -14,19 +13,19 @@ import java.util.stream.Collectors;
 
 public class EducationStatisticsController implements Initializable {
     @FXML
-    private BarChart<String, Long> barChart;
+    private PieChart pieChart;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Thread(this::setupBarChart).start();
+        new Thread(this::setupPieChart).start();
     }
 
-    private void setupBarChart() {
-        XYChart.Series<String, Long> series = new XYChart.Series<>();
-        Map<String, Long> generation = Employee.getEmployees().stream()
+    private void setupPieChart() {
+        var employees = Employee.getEmployees();
+        Map<String, Long> generation = employees.stream()
                 .collect(Collectors.groupingBy(Employee::getEducation, Collectors.counting()));
-        series.getData().addAll(generation.keySet().stream().map(k -> new XYChart.Data<>(k, generation.get(k))).collect(Collectors.toList()));
-        Platform.runLater(() -> barChart.getData().add(series));
+        var pieDate = generation.keySet().stream().map(k -> new PieChart.Data(k + ":" + generation.get(k), generation.get(k))).collect(Collectors.toList());
+        Platform.runLater(() -> pieChart.getData().addAll(pieDate));
     }
 
 }
