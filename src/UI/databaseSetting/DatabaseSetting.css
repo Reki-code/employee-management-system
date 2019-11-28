@@ -1,3 +1,12 @@
 .root {
     -fx-font-family: "Noto Sans CJK SC";
 }
+
+.jfx-button {
+    -fx-border-width: 3px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #D4D7D9;
+    -fx-font-family: "Noto Sans CJK SC";
+    -fx-font-size: 1.7em;
+    -fx-text-fill: #0076FF;
+}

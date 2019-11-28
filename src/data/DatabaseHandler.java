@@ -29,7 +29,7 @@ public class DatabaseHandler {
      *
      * @return DatabaseHandler 实例
      */
-    public static DatabaseHandler getInstance() {
+    static DatabaseHandler getInstance() {
         return BillPughSingleton.INSTANCE;
     }
 
@@ -54,4 +54,19 @@ public class DatabaseHandler {
         e.printStackTrace();
     }
 
+    public static String getDefaultHostName() {
+        return DEFAULT_HOST_NAME;
+    }
+
+    public static String getDefaultHostPort() {
+        return DEFAULT_HOST_PORT;
+    }
+
+    public static String getDefaultUser() {
+        return DEFAULT_USER;
+    }
+
+    public static String getDefaultPass() {
+        return DEFAULT_PASS;
+    }
 }

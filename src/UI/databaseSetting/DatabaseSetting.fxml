@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            xmlns="http://javafx.com/javafx"
-            fx:controller="UI.databaseSetting.DatabaseSettingController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?import javafx.scene.layout.StackPane?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" prefHeight="567.0" prefWidth="887.0"
+           stylesheets="@DatabaseSetting.css" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="UI.databaseSetting.DatabaseSettingController">
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="65.0" layoutY="106.0" prefHeight="46.0" prefWidth="102.0" text="数据库主机"/>
+            <JFXTextField fx:id="hostname" layoutX="167.0" layoutY="106.0" prefHeight="46.0" prefWidth="157.0"/>
+            <Label layoutX="348.0" layoutY="106.0" prefHeight="46.0" prefWidth="67.0" text="端口号"/>
+            <JFXTextField fx:id="port" layoutX="432.0" layoutY="106.0" prefHeight="46.0" prefWidth="157.0"/>
+            <Label layoutX="59.0" layoutY="203.0" prefHeight="46.0" prefWidth="102.0" text="数据库用户"/>
+            <Label layoutX="348.0" layoutY="203.0" prefHeight="46.0" prefWidth="80.0" text="密码"/>
+            <JFXTextField fx:id="user" layoutX="167.0" layoutY="203.0" prefHeight="46.0" prefWidth="157.0"/>
+            <JFXTextField fx:id="pass" layoutX="450.0" layoutY="203.0" prefHeight="46.0" prefWidth="157.0"/>
+            <JFXButton layoutX="561.0" layoutY="352.0" onAction="#set" prefHeight="46.0" prefWidth="92.0" text="保存"/>
+            <JFXButton layoutX="428.0" layoutY="352.0" onAction="#reset" prefHeight="46.0" prefWidth="92.0" text="重置"/>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

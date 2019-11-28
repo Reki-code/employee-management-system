@@ -25,9 +25,10 @@ public class MainWorkbench {
     private WorkbenchModule addEmployeeModule = new AddEmployeeModule();
     private WorkbenchModule averageAnalysisModule = new AverageAnalysisModule();
     private WorkbenchModule ageStatisticsModule = new AgeStatisticsModule();
+    private WorkbenchModule educationStatisticsModule = new EducationStatisticsModule();
     private WorkbenchModule searchEmployeeModule = new SearchEmployeeModule();
     private WorkbenchModule changePasswordModule = new ChangePasswordModule();
-    private WorkbenchModule educationStatisticsModule = new EducationStatisticsModule();
+    private WorkbenchModule databaseSettingModule = new DatabaseSettingModule();
 
     public Workbench buildWorkbench() {
         workbench = Workbench.builder(
@@ -38,7 +39,8 @@ public class MainWorkbench {
                 ageStatisticsModule,
                 searchEmployeeModule,
                 changePasswordModule,
-                educationStatisticsModule
+                educationStatisticsModule,
+                databaseSettingModule
         )
                 .modulesPerPage(6)
                 .toolbarLeft(
@@ -94,7 +96,7 @@ public class MainWorkbench {
 
     private ToolbarItem settingMenu() {
         var databaseSetting = new MenuItem("数据库设置", new MaterialDesignIconView(MaterialDesignIcon.DATABASE));
-        databaseSetting.setOnAction(event -> workbench.showDialog(databaseSetting()));
+        databaseSetting.setOnAction(event -> workbench.openModule(databaseSettingModule));
 
         return new ToolbarItem("设置", new MaterialDesignIconView(MaterialDesignIcon.SETTINGS),
                 databaseSetting
