@@ -1,88 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="511.0" prefWidth="493.0" stylesheets="@AddEmployee.css"
-            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="UI.addEmployee.AddEmployeeController">
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" prefHeight="692.0" prefWidth="1066.0"
+           stylesheets="@AddEmployee.css" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="UI.addEmployee.AddEmployeeController">
     <children>
-        <VBox alignment="CENTER" layoutX="47.0" prefHeight="589.0" prefWidth="415.0"
-              style="-fx-background-color: #FFF;">
+        <AnchorPane prefHeight="511.0" prefWidth="1005.0">
             <children>
-                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                <VBox alignment="CENTER" layoutX="109.0" layoutY="41.0" prefHeight="475.0" prefWidth="302.0">
                     <children>
-                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="职工号" textAlignment="RIGHT"/>
-                        <JFXTextField fx:id="id"/>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="姓名" textAlignment="RIGHT"/>
-                        <JFXTextField fx:id="name"/>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="性别" textAlignment="RIGHT"/>
-                        <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="239.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <JFXRadioButton fx:id="male" text="男">
+                                <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="职工号" textAlignment="RIGHT"/>
+                                <JFXTextField fx:id="id">
                                     <HBox.margin>
-                                        <Insets right="20.0"/>
+                                        <Insets left="5.0"/>
                                     </HBox.margin>
-                                </JFXRadioButton>
-                                <JFXRadioButton fx:id="female" text="女"/>
+                                </JFXTextField>
                             </children>
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
-                            <HBox.margin>
-                                <Insets right="20.0"/>
-                            </HBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="姓名" textAlignment="RIGHT"/>
+                                <JFXTextField fx:id="name">
+                                    <HBox.margin>
+                                        <Insets left="5.0"/>
+                                    </HBox.margin>
+                                </JFXTextField>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="性别" textAlignment="RIGHT"/>
+                                <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="239.0">
+                                    <children>
+                                        <JFXRadioButton fx:id="male" text="男">
+                                            <HBox.margin>
+                                                <Insets right="20.0"/>
+                                            </HBox.margin>
+                                        </JFXRadioButton>
+                                        <JFXRadioButton fx:id="female" text="女"/>
+                                    </children>
+                                    <opaqueInsets>
+                                        <Insets/>
+                                    </opaqueInsets>
+                                    <HBox.margin>
+                                        <Insets left="10.0" right="20.0"/>
+                                    </HBox.margin>
+                                </HBox>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="年龄" textAlignment="RIGHT"/>
+                                <JFXTextField fx:id="age">
+                                    <HBox.margin>
+                                        <Insets left="5.0"/>
+                                    </HBox.margin>
+                                </JFXTextField>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="电话" textAlignment="RIGHT"/>
+                                <JFXTextField fx:id="phoneNumber">
+                                    <HBox.margin>
+                                        <Insets left="5.0"/>
+                                    </HBox.margin>
+                                </JFXTextField>
+                            </children>
                         </HBox>
                     </children>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                </VBox>
+                <VBox alignment="CENTER" layoutX="420.0" layoutY="47.0" prefHeight="377.0" prefWidth="302.0">
                     <children>
-                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="年龄" textAlignment="RIGHT"/>
-                        <JFXTextField fx:id="age"/>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="工资" textAlignment="RIGHT"/>
+                                <!--                        <JFXTextField fx:id="education"/>-->
+                                <JFXTextField fx:id="wage">
+                                    <HBox.margin>
+                                        <Insets left="5.0"/>
+                                    </HBox.margin>
+                                </JFXTextField>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="学历" textAlignment="RIGHT"/>
+                                <JFXComboBox fx:id="education" prefHeight="30.0" prefWidth="137.0">
+                                    <HBox.margin>
+                                        <Insets left="5.0"/>
+                                    </HBox.margin>
+                                </JFXComboBox>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="住址" textAlignment="RIGHT"/>
+                                <JFXTextField fx:id="residence">
+                                    <HBox.margin>
+                                        <Insets left="5.0"/>
+                                    </HBox.margin>
+                                </JFXTextField>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="318.0">
+                            <children>
+                                <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="入职时间" textAlignment="RIGHT"/>
+                                <JFXDatePicker fx:id="entryDate" defaultColor="#006f8f" prefHeight="30.0"
+                                               prefWidth="152.0">
+                                    <HBox.margin>
+                                        <Insets left="5.0"/>
+                                    </HBox.margin>
+                                </JFXDatePicker>
+                            </children>
+                        </HBox>
                     </children>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="电话" textAlignment="RIGHT"/>
-                        <JFXTextField fx:id="phoneNumber"/>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="住址" textAlignment="RIGHT"/>
-                        <JFXTextField fx:id="residence"/>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="学历" textAlignment="RIGHT"/>
-                        <JFXComboBox fx:id="education"/>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="工资" textAlignment="RIGHT"/>
-                        <!--                        <JFXTextField fx:id="education"/>-->
-                        <JFXTextField fx:id="wage"/>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <Label alignment="BOTTOM_RIGHT" prefHeight="30.0" text="入职时间" textAlignment="RIGHT"/>
-                        <JFXDatePicker fx:id="entryDate" defaultColor="#006f8f"/>
-                    </children>
-                </HBox>
-                <JFXButton fx:id="addButton" onAction="#submit" prefHeight="43.0" prefWidth="109.0" text="添加"/>
+                </VBox>
+                <JFXButton fx:id="addButton" layoutX="420.0" layoutY="531.0" onAction="#submit" prefHeight="43.0"
+                           prefWidth="109.0" text="添加"/>
             </children>
-        </VBox>
-        <JFXSpinner fx:id="loading" layoutX="14.0" layoutY="284.0" prefHeight="77.0" prefWidth="79.0" visible="false"/>
+        </AnchorPane>
+        <JFXSpinner fx:id="loading" prefHeight="77.0" prefWidth="79.0" visible="false"/>
     </children>
-</AnchorPane>
+</StackPane>

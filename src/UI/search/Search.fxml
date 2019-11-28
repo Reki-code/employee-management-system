@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="554.0" prefWidth="1109.0" stylesheets="@Search.css"
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="661.0" prefWidth="1109.0" stylesheets="@Search.css"
             xmlns="http://javafx.com/javafx/11.0.1" fx:controller="UI.search.SearchController">
     <children>
-        <AnchorPane layoutX="483.0" prefHeight="554.0" prefWidth="242.0">
+        <AnchorPane layoutX="585.0" layoutY="20.0" prefHeight="554.0" prefWidth="242.0">
             <children>
                 <JFXTextField fx:id="wageLower" layoutX="47.0" layoutY="60.0" prefHeight="49.0" prefWidth="166.0"/>
                 <JFXTextField fx:id="wageUpper" layoutX="271.0" layoutY="61.0" prefHeight="49.0" prefWidth="166.0"/>
@@ -19,7 +18,8 @@
                            prefWidth="108.0" text="查找"/>
             </children>
         </AnchorPane>
-        <JFXTreeTableView fx:id="TreeTableView" prefHeight="696.0" prefWidth="532.0">
+        <JFXTreeTableView fx:id="TreeTableView" prefHeight="696.0" prefWidth="532.0" AnchorPane.bottomAnchor="20.0"
+                          AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
             <columns>
                 <JFXTreeTableColumn fx:id="idColumn" minWidth="133" text="职工编号"/>
                 <JFXTreeTableColumn fx:id="nameColumn" minWidth="133" text="姓名"/>

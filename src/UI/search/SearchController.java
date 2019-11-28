@@ -36,6 +36,7 @@ public class SearchController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         education.getItems().addAll(List.of(Employee.getEducations()).stream().map(Label::new).collect(Collectors.toList()));
+        education.getItems().add(new Label("不限"));
         setupTreeTable();
     }
 

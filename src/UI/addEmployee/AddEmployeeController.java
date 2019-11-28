@@ -1,5 +1,6 @@
 package UI.addEmployee;
 
+import UI.dialog.PromptDialog;
 import com.jfoenix.controls.*;
 import com.jfoenix.validation.RegexValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -9,16 +10,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.StackPane;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class AddEmployeeController implements Initializable {
     private final ToggleGroup genderGroup = new ToggleGroup();
+    @FXML
+    private StackPane rootPane;
     @FXML
     private JFXSpinner loading;
     @FXML
@@ -90,6 +96,28 @@ public class AddEmployeeController implements Initializable {
         female.setToggleGroup(genderGroup);
         education.getItems().addAll(List.of(Employee.getEducations()).stream().map(Label::new).collect(Collectors.toList()));
         entryDate.setValue(LocalDate.now());
+        entryDate.setConverter(new StringConverter<>() {
+            String pattern = "yyyy-MM-dd";
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateTimeFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateTimeFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
         addButton.disableProperty().bind(
                 id.textProperty().isEmpty()
                         .or(name.textProperty().isEmpty()
@@ -105,12 +133,16 @@ public class AddEmployeeController implements Initializable {
     private void submit() {
         loading.setVisible(true);
         new Thread(() -> {
+            String tip;
             if (addEmployee()) {
-                clearForm();
+                tip = "录入成功";
             } else {
-                System.out.println("录入失败");
+                tip = "录入失败";
             }
-            Platform.runLater(() -> loading.setVisible(false));
+            Platform.runLater(() -> {
+                loading.setVisible(false);
+                new PromptDialog("录入信息", tip).show(rootPane);
+            });
         }
         ).start();
     }

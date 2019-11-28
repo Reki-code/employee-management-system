@@ -67,10 +67,13 @@ public class MainWorkbench {
         employeeInfo.setOnAction(event -> workbench.openModule(employeeModule));
         var employeeAdd = new MenuItem("添加职工信息", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_PLUS));
         employeeAdd.setOnAction(event -> workbench.openModule(addEmployeeModule));
+        var searchEmployee = new MenuItem("查询职工信息", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_SEARCH));
+        searchEmployee.setOnAction(event -> workbench.openModule(searchEmployeeModule));
 
         return new ToolbarItem("职工", new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_MULTIPLE),
                 employeeInfo,
-                employeeAdd
+                employeeAdd,
+                searchEmployee
         );
     }
 

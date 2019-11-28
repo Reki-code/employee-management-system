@@ -1,13 +1,14 @@
 package UI.changePassword;
 
-import com.jfoenix.controls.JFXDialog;
+import UI.dialog.ConfirmDialog;
+import UI.dialog.PromptDialog;
 import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.validation.RequiredFieldValidator;
+import com.jfoenix.validation.base.ValidatorBase;
 import data.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
@@ -29,42 +30,85 @@ public class ChangePasswordController implements Initializable {
     private JFXPasswordField newPassword;
     @FXML
     private JFXPasswordField confirmPassword;
+    private ValidatorBase passwordStrength;
+    private ValidatorBase newAndConfirmMatch;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setupValidator();
+    }
+
+    private void setupValidator() {
+        var emptyValidator = new RequiredFieldValidator("不能为空");
+        setEmptyValidator(oldPassword, emptyValidator);
+        setEmptyValidator(newPassword, emptyValidator);
+        setEmptyValidator(confirmPassword, emptyValidator);
+        passwordStrength = new ValidatorBase("密码强度不足") {
+            @Override
+            protected void eval() {
+                hasErrors.set(!(numberLabel.isStrikethrough() && letterLabel.isStrikethrough() && charsLabel.isStrikethrough()));
+            }
+        };
+        newPassword.getValidators().add(passwordStrength);
         newPassword.textProperty().addListener((observable, oldValue, newValue) -> {
             numberLabel.setStrikethrough(newValue.matches(".*\\d+.*"));
             letterLabel.setStrikethrough(newValue.matches(".*[a-zA-Z]+.*"));
             charsLabel.setStrikethrough(6 <= newValue.length());
+            if (!newValue.isEmpty()) {
+                newPassword.validate();
+            }
+        });
+        newAndConfirmMatch = new ValidatorBase("确认密码和新密码不匹配") {
+            @Override
+            protected void eval() {
+                hasErrors.set(!newPassword.getText().equals(confirmPassword.getText()));
+            }
+        };
+        confirmPassword.getValidators().add(newAndConfirmMatch);
+        confirmPassword.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                confirmPassword.validate();
+            }
+        });
+    }
+
+    private void setEmptyValidator(JFXPasswordField textField, RequiredFieldValidator validator) {
+        textField.getValidators().add(validator);
+        textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                textField.validate();
+            }
         });
     }
 
     @FXML
     private void changePassword(ActionEvent event) {
+        if (oldPassword.getText().isEmpty() || newPassword.getText().isEmpty() || confirmPassword.getText().isEmpty()) {
+            new PromptDialog("修改密码", "密码不能为空").show(rootPane);
+        } else if (passwordStrength.hasErrorsProperty().getValue() || newAndConfirmMatch.hasErrorsProperty().getValue()) {
+            new PromptDialog("修改密码", "密码强度不足").show(rootPane);
+        } else {
+            new ConfirmDialog("修改密码", "您确认要修改密码吗?")
+                    .setConfirmAction(this::changePassword)
+                    .setCancelAction(() -> {
+                    })
+                    .show(rootPane);
+        }
+    }
+
+    private void changePassword() {
         var currentUser = User.getCurrentUser();
-        System.out.println(currentUser);
-        var pane = new Pane();
-        var dialog = new JFXDialog();
-        dialog.setOverlayClose(true);
-        dialog.setContent(pane);
         String tip;
         if (!currentUser.checkPassword(oldPassword.getText())) {
             tip = "密码错误";
         } else {
             if (User.updateUserDetail("password", newPassword.getText(), currentUser.getId())) {
                 tip = "修改成功";
-                clearField();
             } else {
-                tip = "密码错误";
+                tip = "修改失败";
             }
         }
-        pane.getChildren().add(new Label(tip));
-        dialog.show(rootPane);
+        new PromptDialog("修改密码", tip).show(rootPane);
     }
 
-    private void clearField() {
-        oldPassword.setText("");
-        newPassword.setText("");
-        confirmPassword.setText("");
-    }
 }

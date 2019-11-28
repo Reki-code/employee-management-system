@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ResourceBundle;
@@ -19,7 +20,7 @@ public class AverageAnalysisController implements Initializable {
     private Label wage;
     @FXML
     private Label seniority;
-
+    private DecimalFormat decimalFormat = new DecimalFormat("0.0");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -32,9 +33,9 @@ public class AverageAnalysisController implements Initializable {
         var wage = employees.stream().mapToInt(Employee::getWage).average().getAsDouble();
         var seniority = employees.stream().mapToInt(e -> Period.between(e.getEntryDate(), LocalDate.now()).getYears()).average().getAsDouble();
         Platform.runLater(() -> {
-            this.age.setText(String.valueOf(age));
-            this.wage.setText(String.valueOf(wage));
-            this.seniority.setText(String.valueOf(seniority));
+            this.age.setText(decimalFormat.format(age));
+            this.wage.setText(decimalFormat.format(wage));
+            this.seniority.setText(decimalFormat.format(seniority));
         });
     }
 
