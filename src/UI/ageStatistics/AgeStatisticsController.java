@@ -15,17 +15,20 @@ import java.util.stream.Collectors;
 public class AgeStatisticsController implements Initializable {
     @FXML
     private BarChart<String, Long> barChart;
+    private XYChart.Series<String, Long> series = new XYChart.Series<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         new Thread(this::setupBarChart).start();
     }
 
-    private void setupBarChart() {
-        XYChart.Series<String, Long> series = new XYChart.Series<>();
+    public AgeStatisticsController() {
         Map<String, Long> generation = Employee.getEmployees().stream()
                 .collect(Collectors.groupingBy(this::getGeneration, Collectors.counting()));
         series.getData().addAll(generation.keySet().stream().map(k -> new XYChart.Data<>(k, generation.get(k))).collect(Collectors.toList()));
+    }
+
+    private void setupBarChart() {
         Platform.runLater(() -> barChart.getData().add(series));
     }
 

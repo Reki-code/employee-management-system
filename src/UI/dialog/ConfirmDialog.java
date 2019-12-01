@@ -16,6 +16,8 @@ public class ConfirmDialog extends JFXDialog {
         content.setActions(confirmButton, cancelButton);
         setContent(content);
         setOverlayClose(false);
+        confirmButton.setOnAction(event -> close());
+        cancelButton.setOnAction(event -> close());
     }
 
     public ConfirmDialog setConfirmAction(Runnable action) {

@@ -124,19 +124,6 @@ public class MainWorkbench {
         );
     }
 
-    private WorkbenchDialog databaseSetting() {
-        Node databaseSetting = null;
-        try {
-            databaseSetting = FXMLLoader.load(getClass().getResource("/UI/databaseSetting/DatabaseSetting.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return WorkbenchDialog.builder(
-                "数据库设置", databaseSetting)
-                .blocking(true)
-                .build();
-    }
-
     private WorkbenchDialog profileDetail() {
         Node profile = null;
         try {

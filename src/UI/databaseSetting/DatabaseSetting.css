@@ -10,3 +10,9 @@
     -fx-font-size: 1.7em;
     -fx-text-fill: #0076FF;
 }
+
+.card {
+    -fx-border-color: #D4D7D9;
+    -fx-border-width: 3px;
+    -fx-border-radius: 5px;
+}

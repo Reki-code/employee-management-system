@@ -58,3 +58,9 @@
     -fx-background-insets: 2.0 0.0 0.0;
     -fx-background-radius: 2.0em;
 }
+
+.detail {
+    -fx-border-color: #D4D7D9;
+    -fx-border-width: 3px;
+    -fx-border-radius: 5px;
+}

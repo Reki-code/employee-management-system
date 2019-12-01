@@ -1,6 +1,7 @@
 package UI.databaseSetting;
 
 import UI.dialog.PromptDialog;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import data.DatabaseHandler;
 import javafx.event.ActionEvent;
@@ -22,7 +23,7 @@ public class DatabaseSettingController implements Initializable {
     @FXML
     private JFXTextField user;
     @FXML
-    private JFXTextField pass;
+    private JFXPasswordField pass;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

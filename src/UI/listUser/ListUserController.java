@@ -1,9 +1,8 @@
 package UI.listUser;
 
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import UI.dialog.ConfirmDialog;
+import UI.dialog.PromptDialog;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
@@ -17,10 +16,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,6 +30,15 @@ import java.util.function.Function;
 
 public class ListUserController implements Initializable{
 
+    private final ObservableList<UserProperty> userData = FXCollections.observableArrayList();
+    @FXML
+    private JFXTextField username;
+    @FXML
+    private JFXTextField phone;
+    @FXML
+    private JFXPasswordField password;
+    @FXML
+    private AnchorPane addPane;
     @FXML
     private JFXTreeTableView<UserProperty> editableTreeTableView;
     @FXML
@@ -40,6 +51,8 @@ public class ListUserController implements Initializable{
     private Label editableTreeTableViewCount;
     @FXML
     private JFXTextField searchField;
+    @FXML
+    private StackPane rootPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -82,7 +95,8 @@ public class ListUserController implements Initializable{
 
         editableTreeTableView.setShowRoot(false);
         editableTreeTableView.setEditable(true);
-        final ObservableList<UserProperty> userData = getUserData();
+        final ObservableList<UserProperty> userData;
+        userData = fetchUserData();
         Platform.runLater(() -> {
             editableTreeTableView.setRoot(new RecursiveTreeItem<>(userData, RecursiveTreeObject::getChildren));
             editableTreeTableViewCount.textProperty()
@@ -103,10 +117,51 @@ public class ListUserController implements Initializable{
                 });
     }
 
-    private ObservableList<UserProperty> getUserData() {
-        final ObservableList<UserProperty> userData = FXCollections.observableArrayList();
+    private ObservableList<UserProperty> fetchUserData() {
         User.getUsers().forEach(u -> userData.add(new UserProperty(u.getUsername(), u.getPhoneNumber(), u.getId())));
         return userData;
+    }
+
+    public void deleteUser(ActionEvent event) {
+        if (!editableTreeTableView.getSelectionModel().isEmpty()) {
+            var selectUser = editableTreeTableView.getSelectionModel().getSelectedItem().getValue();
+            if (selectUser != null && !userData.isEmpty()) {
+                new ConfirmDialog("管理员管理", String.format("确定要删除管理员: %s 吗?", selectUser.getUsername()))
+                        .setConfirmAction(() -> {
+                            deleteUser(selectUser);
+                        })
+                        .show(rootPane);
+            }
+        }
+    }
+
+    private void deleteUser(UserProperty user) {
+        if (User.delete(user.getId())) {
+            userData.remove(user);
+        } else {
+            new PromptDialog("管理员管理", "删除失败").show(rootPane);
+        }
+    }
+
+    public void addUser(ActionEvent event) {
+        if (User.findUsername(username.getText())) {
+            new PromptDialog("添加管理员", "用户名已存在").show(rootPane);
+        } else {
+            var user = new User();
+            user.setUsername(username.getText());
+            user.setPhoneNumber(phone.getText());
+            user.setPassword(password.getText());
+            if (user.signUp()) {
+                System.out.println("添加成僧");
+                new PromptDialog("添加管理员", "添加成功").show(rootPane);
+                userData.add(new UserProperty(user.getUsername(), user.getPhoneNumber(), user.getId()));
+            }
+            addPane.toBack();
+        }
+    }
+
+    public void showAddUserPane(ActionEvent event) {
+        addPane.toFront();
     }
 
     private static final class UserProperty extends RecursiveTreeObject<UserProperty> {
@@ -118,6 +173,22 @@ public class ListUserController implements Initializable{
             this.username = new SimpleStringProperty(username);
             this.phoneNumber = new SimpleStringProperty(phoneNumber);
             this.id = new SimpleIntegerProperty(id);
+        }
+
+        public int getId() {
+            return id.get();
+        }
+
+        public SimpleIntegerProperty idProperty() {
+            return id;
+        }
+
+        public String getUsername() {
+            return username.get();
+        }
+
+        public String getPhoneNumber() {
+            return phoneNumber.get();
         }
 
         StringProperty usernameProperty() {

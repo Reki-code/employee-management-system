@@ -67,8 +67,6 @@ public class EmployeeListController implements Initializable {
         if (!editableTreeTableView.getSelectionModel().isEmpty()) {
             new ConfirmDialog("删除", "确认要删除该职工的信息吗?")
                     .setConfirmAction(() -> delEmployee(getSelectedValue().toEmployee()))
-                    .setCancelAction(() -> {
-                    })
                     .show(rootPane);
         }
     }

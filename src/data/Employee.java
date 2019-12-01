@@ -208,7 +208,6 @@ public class Employee {
         return educations;
     }
 
-
     @Override
     public String toString() {
         return "Employee{" +

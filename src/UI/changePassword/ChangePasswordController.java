@@ -90,8 +90,6 @@ public class ChangePasswordController implements Initializable {
         } else {
             new ConfirmDialog("修改密码", "您确认要修改密码吗?")
                     .setConfirmAction(this::changePassword)
-                    .setCancelAction(() -> {
-                    })
                     .show(rootPane);
         }
     }

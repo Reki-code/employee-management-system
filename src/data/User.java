@@ -99,31 +99,15 @@ public class User {
         return getPassword().equals(password);
     }
 
-    /**
-     * 注册新用户, 数据库返回编号(id)
-     * @return true 注册成功, false 注册失败
-     */
-    public boolean signUp() {
-        String sql = "INSERT INTO " + TABLE_NAME + "(username, password, phoneNumber) VALUES (?, ?, ?)";
-        try (var conn = databaseHandler.getConnection()){
-            var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, phoneNumber);
-            var count = preparedStatement.executeUpdate();
-            if (count > 0) {
-                try (var generatedKeys = preparedStatement.getGeneratedKeys()){
-                    generatedKeys.next();
-                    setId(generatedKeys.getInt("id"));
-                    currentUser = this;
-                }
-            } else {
-                return false;
-            }
+    public static boolean delete(int id) {
+        String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+        try (var conn = databaseHandler.getConnection()) {
+            var preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            return 0 < preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
@@ -175,6 +159,39 @@ public class User {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * 注册新用户, 数据库返回编号(id)
+     *
+     * @return true 注册成功, false 注册失败
+     */
+    public boolean signUp() {
+        String sql = "INSERT INTO " + TABLE_NAME + "(username, password, phoneNumber) VALUES (?, ?, ?)";
+        try (var conn = databaseHandler.getConnection()) {
+            var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, phoneNumber);
+            var count = preparedStatement.executeUpdate();
+            if (count > 0) {
+                try (var generatedKeys = preparedStatement.getGeneratedKeys()) {
+                    generatedKeys.next();
+                    setId(generatedKeys.getInt("id"));
+                }
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean delete() {
+        return delete(getId());
     }
 
     @Override

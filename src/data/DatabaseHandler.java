@@ -50,10 +50,6 @@ public class DatabaseHandler {
         private static final DatabaseHandler INSTANCE = new DatabaseHandler();
     }
 
-    private void printSQLException(SQLException e) {
-        e.printStackTrace();
-    }
-
     public static String getDefaultHostName() {
         return DEFAULT_HOST_NAME;
     }

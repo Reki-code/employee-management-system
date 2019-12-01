@@ -2,8 +2,29 @@
     -fx-font-family: "Noto Sans CJK SC";
 }
 
+.main-pane {
+    -fx-background-color: #F5F5F5;
+}
+
+.add-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(gaussian, darkgrey, 50, 0, 0, 0);
+}
+
 .title {
     -fx-font-size: 40;
+}
+
+.jfx-button {
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #0076FF;
+    -fx-font-family: "Noto Sans CJK SC";
+    -fx-font-size: 1.3em;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
 }
 
 .scroll-bar:horizontal .track,
@@ -50,4 +71,12 @@
 
 .split-pane:horizontal > .split-pane-divider {
     -fx-background-color: transparent;
+}
+
+.jfx-text-field {
+    -jfx-focus-color: #0076FF;
+}
+
+.jfx-password-field {
+    -jfx-focus-color: #0076FF;
 }
