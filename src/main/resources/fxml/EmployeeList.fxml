@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" stylesheets="@../styles/EmployeeList.css"
+           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.java.ui.EmployeeListController">
+    <AnchorPane prefHeight="800.0" prefWidth="1024.0">
+        <VBox layoutX="20.0" layoutY="80.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0"
+              AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="80.0">
+            <JFXTreeTableView fx:id="editableTreeTableView" prefHeight="696.0" prefWidth="1000.0">
+                <columns>
+                    <JFXTreeTableColumn fx:id="idColumn" maxWidth="-1.0" minWidth="111.0" text="职工号"/>
+                    <JFXTreeTableColumn fx:id="nameColumn" maxWidth="105.0" minWidth="96.0" prefWidth="96.0"
+                                        text="姓名"/>
+                    <JFXTreeTableColumn fx:id="genderColumn" maxWidth="102.0" minWidth="53.0" prefWidth="63.0"
+                                        text="性别"/>
+                    <JFXTreeTableColumn fx:id="ageColumn" maxWidth="169.0" minWidth="45.0" prefWidth="65.0"
+                                        text="年龄"/>
+                    <JFXTreeTableColumn fx:id="phoneNumberColumn" maxWidth="235.0" minWidth="103.0"
+                                        prefWidth="111.0" text="电话"/>
+                    <JFXTreeTableColumn fx:id="residenceColumn" maxWidth="228.0" minWidth="111.0"
+                                        prefWidth="166.0" text="住址"/>
+                    <JFXTreeTableColumn fx:id="educationColumn" maxWidth="183.0" minWidth="98.0"
+                                        prefWidth="110.0" text="学历"/>
+                    <JFXTreeTableColumn fx:id="wageColumn" maxWidth="195.0" minWidth="96.0" prefWidth="120.0"
+                                        text="工资"/>
+                    <JFXTreeTableColumn fx:id="entryDateColumn" maxWidth="210.0" minWidth="111.0"
+                                        prefWidth="157.0" text="入职日期"/>
+                </columns>
+            </JFXTreeTableView>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="394.0">
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+                <VBox.margin>
+                    <Insets top="10.0"/>
+                </VBox.margin>
+                <JFXButton onAction="#delEmployee" text="删除"/>
+            </HBox>
+        </VBox>
+        <HBox alignment="CENTER" spacing="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="3.0">
+            <Label prefHeight="64.0" prefWidth="240.0" styleClass="title" text="职工信息">
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Label>
+            <Label fx:id="editableTreeTableViewCount" styleClass="title"/>
+            <JFXTextField fx:id="searchField" prefHeight="34.0" prefWidth="226.0" promptText="搜索..."/>
+        </HBox>
+        <JFXButton layoutX="915.0" layoutY="19.0" onAction="#refresh" text="刷新" AnchorPane.rightAnchor="20.0"/>
+    </AnchorPane>
+</StackPane>

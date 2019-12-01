@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="288.0" prefWidth="377.0"
+            stylesheets="@../styles/Profile.css"
+            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.java.ui.ProfileController">
+    <Label layoutX="64.0" layoutY="79.0" prefHeight="61.0" prefWidth="77.0" text="用户名:"/>
+    <Label fx:id="username" layoutX="154.0" layoutY="79.0" prefHeight="61.0" prefWidth="148.0"/>
+    <Label layoutX="64.0" layoutY="140.0" prefHeight="61.0" prefWidth="77.0" text="联系电话:"/>
+    <Label fx:id="phoneNumber" layoutX="154.0" layoutY="140.0" prefHeight="61.0" prefWidth="148.0"/>
+</AnchorPane>

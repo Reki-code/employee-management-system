@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" onKeyPressed="#onPress" prefHeight="655.0"
+            prefWidth="1130.0" style="-fx-background-color: rgba(255,255,255,0.85);" stylesheets="@../styles/SignIn.css"
+            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.java.ui.SignInWindowController">
+    <Label alignment="CENTER" layoutX="218.0" layoutY="167.0" prefHeight="46.0" prefWidth="129.0" text="登录">
+        <font>
+            <Font size="24.0"/>
+        </font>
+    </Label>
+    <JFXTextField fx:id="loginUsername" focusColor="#0076ff" labelFloat="true" layoutX="141.0" layoutY="254.0"
+                  prefHeight="46.0" prefWidth="283.0" promptText="用户名" styleClass="inputFiled"/>
+    <JFXPasswordField fx:id="loginPassword" focusColor="#0076ff" labelFloat="true" layoutX="141.0" layoutY="336.0"
+                      prefHeight="46.0" prefWidth="283.0" promptText="密码" styleClass="inputFiled"/>
+    <JFXButton fx:id="signInBtn" layoutX="290.0" layoutY="440.0" onAction="#signIn" prefHeight="46.0" prefWidth="138.0"
+               styleClass="loginBtn" text="登录"/>
+    <JFXSpinner fx:id="signInSpinner" layoutX="258.0" layoutY="311.0" visible="false"/>
+    <JFXButton onAction="#exit" layoutX="141.0" layoutY="440.0" prefHeight="46.0" prefWidth="138.0"
+               styleClass="switchBtn" text="退出"/>
+    <AnchorPane layoutX="565.0" prefHeight="655.0" prefWidth="565.0" styleClass="slideImage"
+                AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Label alignment="CENTER" layoutX="50.0" layoutY="101.0" prefHeight="92.0" prefWidth="466.0" styleClass="title"
+               text="欢迎使用"/>
+        <Label alignment="CENTER" layoutX="50.0" layoutY="137.0" prefHeight="170.0" prefWidth="466.0" styleClass="title"
+               text="职工信息管理系统"/>
+    </AnchorPane>
+</AnchorPane>

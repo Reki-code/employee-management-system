@@ -1,0 +1,16 @@
+.root > * {
+    -primary-color: #2196F3;
+    -primary-variant-color: #6EC6FF;
+    -secondary-color: #95BCFF;
+    -secondary-variant-color: #AECCFF;
+    -background-color: #F5F5F5;
+    -surface-color: #FFFFFF;
+    -error-color: #FF6058;
+    -on-primary-color: #FFFFFF;
+    -on-secondary-color: #FFFFFF;
+    -on-background-color: #000000;
+    -on-surface-color: #000000;
+    -on-error-color: #FFFFFF;
+
+    -fx-font-family: "Noto Sans CJK SC";
+}
