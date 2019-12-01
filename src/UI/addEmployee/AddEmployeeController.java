@@ -15,6 +15,7 @@ import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -133,12 +134,7 @@ public class AddEmployeeController implements Initializable {
     private void submit() {
         loading.setVisible(true);
         new Thread(() -> {
-            String tip;
-            if (addEmployee()) {
-                tip = "录入成功";
-            } else {
-                tip = "录入失败";
-            }
+            String tip = addEmployee();
             Platform.runLater(() -> {
                 loading.setVisible(false);
                 new PromptDialog("录入信息", tip).show(rootPane);
@@ -147,7 +143,7 @@ public class AddEmployeeController implements Initializable {
         ).start();
     }
 
-    private boolean addEmployee() {
+    private String addEmployee() {
         var genderSelected = (JFXRadioButton) genderGroup.getSelectedToggle();
         var gender = genderSelected.getText();
         String education;
@@ -159,10 +155,12 @@ public class AddEmployeeController implements Initializable {
         var employee = new Employee(Integer.parseInt(id.getText()), name.getText(), gender, Integer.parseInt(age.getText()), phoneNumber.getText(), residence.getText(), education, Integer.parseInt(wage.getText()), entryDate.getValue());
         try {
             employee.insert();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            return "职工编号重复";
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return "录入失败";
         }
-        return true;
+        return "录入成功";
     }
 }

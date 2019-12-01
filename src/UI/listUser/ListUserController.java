@@ -152,7 +152,6 @@ public class ListUserController implements Initializable{
             user.setPhoneNumber(phone.getText());
             user.setPassword(password.getText());
             if (user.signUp()) {
-                System.out.println("添加成僧");
                 new PromptDialog("添加管理员", "添加成功").show(rootPane);
                 userData.add(new UserProperty(user.getUsername(), user.getPhoneNumber(), user.getId()));
             }

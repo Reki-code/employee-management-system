@@ -17,7 +17,7 @@ public class WindowUtil {
         stage.initStyle(StageStyle.TRANSPARENT);
         Pane root = null;
         try {
-            root = FXMLLoader.load(WindowUtil.class.getResource("/UI/SignInAndSignUpWindow/SignInAndSignUpWindow.fxml"));
+            root = FXMLLoader.load(WindowUtil.class.getResource("/UI/signInWindow/SignInWindow.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

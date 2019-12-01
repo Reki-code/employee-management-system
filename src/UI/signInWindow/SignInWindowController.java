@@ -1,15 +1,14 @@
-package UI.SignInAndSignUpWindow;
+package UI.signInWindow;
 
 import UI.dialog.InfoDialog;
 import UI.util.WindowUtil;
-import animatefx.animation.SlideInLeft;
-import animatefx.animation.SlideInRight;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
 import data.User;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -23,41 +22,20 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
-public class SignInAndSignUpWindowController implements Initializable {
+public class SignInWindowController implements Initializable {
     @FXML
     private JFXTextField loginUsername;
     @FXML
     private JFXPasswordField loginPassword;
     @FXML
-    private JFXTextField signUpPhone;
-    @FXML
-    private JFXTextField signUpUsername;
-    @FXML
-    private JFXPasswordField signUpPassword;
-    @FXML
-    private JFXPasswordField signUpConfirmPassword;
-    @FXML
-    private AnchorPane slideAnchor;
-    @FXML
     private AnchorPane rootPane;
     @FXML
     private JFXButton signInBtn;
     @FXML
-    private JFXButton signUpBtn;
-    @FXML
     private JFXSpinner signInSpinner;
-    @FXML
-    private JFXSpinner signUpSpinner;
-
-    private SlideState slideState;
-    private enum SlideState {
-        LEFT,
-        RIGHT
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        slideState = SlideState.RIGHT;
         var prefs = Preferences.userNodeForPackage(data.User.class);
         loginUsername.setText(prefs.get("username", ""));
     }
@@ -85,28 +63,6 @@ public class SignInAndSignUpWindowController implements Initializable {
         }).start();
     }
 
-    @FXML
-    void signUp() {
-        signUpBtn.setDisable(true);
-        signUpSpinner.setVisible(true);
-        User user = new User();
-        user.setUsername(signUpUsername.getText());
-        user.setPassword(signUpPassword.getText());
-        user.setPhoneNumber(signUpPhone.getText());
-        new Thread(() -> {
-            if (user.signUp()) {
-                Platform.runLater(this::startMainWindow);
-            } else {
-                Platform.runLater(() -> {
-                    var alert = new InfoDialog(Alert.AlertType.INFORMATION, "注册失败", new ButtonType("好的"));
-                    alert.showAndWait();
-                    signUpBtn.setDisable(false);
-                    signUpSpinner.setVisible(false);
-                });
-            }
-        }).start();
-    }
-
     private void startMainWindow() {
         WindowUtil.createMainWindow(1024, 720).show();
 
@@ -115,32 +71,15 @@ public class SignInAndSignUpWindowController implements Initializable {
     }
 
     @FXML
-    void slide() {
-        switch (slideState) {
-            case LEFT:
-                slideState = SlideState.RIGHT;
-                slideAnchor.setLayoutX(565);
-                new SlideInLeft(slideAnchor).play();
-                break;
-            case RIGHT:
-                slideState = SlideState.LEFT;
-                slideAnchor.setLayoutX(0);
-                new SlideInRight(slideAnchor).play();
-                break;
+    private void onPress(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            signIn();
         }
     }
 
     @FXML
-    private void onPress(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.ENTER) {
-            switch (slideState) {
-                case LEFT:
-                    signUp();
-                    break;
-                case RIGHT:
-                    signIn();
-                    break;
-            }
-        }
+    private void exit(ActionEvent event) {
+        System.exit(0);
     }
+
 }
