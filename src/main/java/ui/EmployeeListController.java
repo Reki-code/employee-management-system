@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import main.java.data.Employee;
 import main.java.utils.EmployeeProperty;
 import main.java.utils.dialog.ConfirmDialog;
+import main.java.utils.dialog.PromptDialog;
 import main.java.utils.editingcell.ComboBoxEditingCell;
 import main.java.utils.editingcell.DatePickerEditingCell;
 
@@ -64,6 +65,9 @@ public class EmployeeListController implements Initializable {
         new Thread(this::setupEmployeeTableView).start();
     }
 
+    /**
+     * 处理删除按钮点击信息
+     */
     @FXML
     private void delEmployee() {
         if (!editableTreeTableView.getSelectionModel().isEmpty()) {
@@ -73,9 +77,14 @@ public class EmployeeListController implements Initializable {
         }
     }
 
+    /**
+     * 删除指定的职工信息
+     *
+     * @param employee 要删除的职工
+     */
     private void delEmployee(Employee employee) {
         try {
-            if (employee.delete()) {
+            if (employee.delete()) { //删除成功
                 employeeData.removeIf(e -> e.getId() == employee.getId());
             }
         } catch (SQLException e) {
@@ -94,6 +103,9 @@ public class EmployeeListController implements Initializable {
         });
     }
 
+    /**
+     * 设置职工信息表
+     */
     private void setupEmployeeTableView() {
         setupCellValueFactory(idColumn, p -> p.idProperty().asObject());
         setupCellValueFactory(nameColumn, EmployeeProperty::nameProperty);
@@ -174,7 +186,13 @@ public class EmployeeListController implements Initializable {
         searchField.textProperty().addListener(setupSearchField(editableTreeTableView));
     }
 
-
+    /**
+     * 保存职工信息到数据库中
+     *
+     * @param t      表格修改事件
+     * @param change 更改的信息
+     * @param <T>    更改信息的类型
+     */
     private <T> void saveEmployeeToDatabase(TreeTableColumn.CellEditEvent<EmployeeProperty, T> t, Function<Employee, Employee> change) {
         var currentRow = t.getRowValue().getValue().toEmployee();
         var newEmployee = change.apply(currentRow);
@@ -187,7 +205,7 @@ public class EmployeeListController implements Initializable {
     }
 
     private void saveFailure() {
-        System.out.println("保存失败");
+        new PromptDialog("保存信息", "职工信息保存失败").show(rootPane);
     }
 
     private ChangeListener<String> setupSearchField(final JFXTreeTableView<EmployeeProperty> tableView) {
@@ -216,6 +234,9 @@ public class EmployeeListController implements Initializable {
         return employeeData;
     }
 
+    /**
+     * 处理刷新按钮点击事件
+     */
     @FXML
     public void refresh() {
         new Thread(this::setupEmployeeTableView).start();

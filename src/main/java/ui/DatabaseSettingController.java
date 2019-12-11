@@ -2,7 +2,6 @@ package main.java.ui;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.StackPane;
@@ -34,8 +33,11 @@ public class DatabaseSettingController implements Initializable {
         pass.setText(prefs.get("pass", DatabaseHandler.getDefaultPass()));
     }
 
+    /**
+     * 处理设置按钮点击事件
+     */
     @FXML
-    public void set(ActionEvent event) {
+    public void set() {
         var host = this.hostname.getText();
         var port = this.port.getText();
         var user = this.user.getText();
@@ -44,8 +46,11 @@ public class DatabaseSettingController implements Initializable {
         new PromptDialog("数据库设置", "保存成功, 重启后生效").show(rootPane);
     }
 
+    /**
+     * 处理重置按钮点击事件
+     */
     @FXML
-    public void reset(ActionEvent event) {
+    public void reset() {
         var host = DatabaseHandler.getDefaultHostName();
         var port = DatabaseHandler.getDefaultHostPort();
         var user = DatabaseHandler.getDefaultUser();

@@ -20,8 +20,12 @@ public class EducationStatisticsController implements Initializable {
         new Thread(this::setupPieChart).start();
     }
 
+    /**
+     * 设置饼图
+     */
     private void setupPieChart() {
         var employees = Employee.getEmployees();
+        //分组计数, 教育程度
         Map<String, Long> generation = employees.stream()
                 .collect(Collectors.groupingBy(Employee::getEducation, Collectors.counting()));
         var pieDate = generation.keySet().stream().map(k -> new PieChart.Data(k + ":" + generation.get(k), generation.get(k))).collect(Collectors.toList());

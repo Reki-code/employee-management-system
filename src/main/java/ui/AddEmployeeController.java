@@ -65,6 +65,9 @@ public class AddEmployeeController implements Initializable {
         setupValidator();
     }
 
+    /**
+     * 设置验证器
+     */
     private void setupValidator() {
         var EmptyValidator = new RequiredFieldValidator("不能为空");
         setEmptyValidator(id, EmptyValidator);
@@ -92,6 +95,9 @@ public class AddEmployeeController implements Initializable {
         });
     }
 
+    /**
+     * 设置表单
+     */
     private void setupForm() {
         male.setToggleGroup(genderGroup);
         female.setToggleGroup(genderGroup);
@@ -130,6 +136,9 @@ public class AddEmployeeController implements Initializable {
                                                                 )))))));
     }
 
+    /**
+     * 处理录入按钮点击事件
+     */
     @FXML
     private void submit() {
         loading.setVisible(true);
@@ -143,6 +152,12 @@ public class AddEmployeeController implements Initializable {
         ).start();
     }
 
+    /**
+     * 保存职工信息
+     * 把表单当中的信息保存到数据库中
+     *
+     * @return true 保存成功, false 保存失败
+     */
     private String addEmployee() {
         var genderSelected = (JFXRadioButton) genderGroup.getSelectedToggle();
         var gender = genderSelected.getText();

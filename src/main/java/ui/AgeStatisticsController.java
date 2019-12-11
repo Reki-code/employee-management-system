@@ -18,6 +18,7 @@ public class AgeStatisticsController implements Initializable {
     private XYChart.Series<String, Long> series = new XYChart.Series<>();
 
     public AgeStatisticsController() {
+        //分组计数职工的年龄信息
         Map<String, Long> generation = Employee.getEmployees().stream()
                 .collect(Collectors.groupingBy(this::getGeneration, Collectors.counting()));
         series.getData().addAll(generation.keySet().stream().map(k -> new XYChart.Data<>(k, generation.get(k))).collect(Collectors.toList()));
@@ -32,6 +33,12 @@ public class AgeStatisticsController implements Initializable {
         Platform.runLater(() -> barChart.getData().add(series));
     }
 
+    /**
+     * 计算职工的年龄段,以字符串的形式返回
+     *
+     * @param employee 职工信息
+     * @return 职工的年龄段
+     */
     private String getGeneration(Employee employee) {
         var age = employee.getAge();
         if (0 < age && age <= 20) {

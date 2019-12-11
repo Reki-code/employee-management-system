@@ -38,6 +38,9 @@ public class ChangePasswordController implements Initializable {
         setupValidator();
     }
 
+    /**
+     * 设置验证器
+     */
     private void setupValidator() {
         var emptyValidator = new RequiredFieldValidator("不能为空");
         setEmptyValidator(oldPassword, emptyValidator);
@@ -81,6 +84,11 @@ public class ChangePasswordController implements Initializable {
         });
     }
 
+    /**
+     * 处理更改密码按钮点击事件
+     *
+     * @param event 点击信息
+     */
     @FXML
     private void changePassword(ActionEvent event) {
         if (oldPassword.getText().isEmpty() || newPassword.getText().isEmpty() || confirmPassword.getText().isEmpty()) {
@@ -94,6 +102,9 @@ public class ChangePasswordController implements Initializable {
         }
     }
 
+    /**
+     * 修改密码
+     */
     private void changePassword() {
         var currentUser = User.getCurrentUser();
         String tip;

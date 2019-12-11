@@ -3,7 +3,6 @@ package main.java.ui;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -60,17 +59,31 @@ public class SearchController implements Initializable {
         employeeData = Employee.getEmployees();
     }
 
+    /**
+     * 处理刷新按钮点击事件
+     * 重新拉取数据
+     */
     @FXML
-    public void refresh(ActionEvent event) {
+    public void refresh() {
         fetchData();
     }
 
+    /**
+     * 处理搜索按钮点击事件
+     * 按照用户输入的条件筛选数据,数据显示到列表试图中
+     */
     @FXML
-    public void search(ActionEvent event) {
+    public void search() {
         listView.getItems().clear();
         listView.getItems().addAll(employeeData.stream().filter(this::filterEmployee).map(Card::new).collect(Collectors.toList()));
     }
 
+    /**
+     * 筛选职工信息
+     *
+     * @param employee 职工
+     * @return true 符合条件, false 不符合条件
+     */
     private boolean filterEmployee(Employee employee) {
         var employeeWage = employee.getWage();
         var wageCondition = getWageLower() <= employeeWage && employeeWage <= getWageUpper();

@@ -27,6 +27,9 @@ public class AverageAnalysisController implements Initializable {
         new Thread(this::calculateAverage).start();
     }
 
+    /**
+     * 计算职工的平均年龄、平均工资和平均工龄
+     */
     private void calculateAverage() {
         var employees = Employee.getEmployees();
         var age = employees.stream().mapToInt(Employee::getAge).average().getAsDouble();

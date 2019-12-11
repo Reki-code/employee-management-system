@@ -40,6 +40,9 @@ public class SignInWindowController implements Initializable {
         loginUsername.setText(prefs.get("username", ""));
     }
 
+    /**
+     * 处理登录按钮点击事件
+     */
     @FXML
     void signIn() {
         signInBtn.setDisable(true);
@@ -48,11 +51,11 @@ public class SignInWindowController implements Initializable {
         user.setUsername(loginUsername.getText());
         user.setPassword(loginPassword.getText());
         new Thread(() -> {
-            if (user.signIn() == User.LoginStatus.SUCCESS) {
+            if (user.signIn() == User.LoginStatus.SUCCESS) { //登录成功,启动主界面
                 Platform.runLater(this::startMainWindow);
                 var prefs = Preferences.userNodeForPackage(main.java.data.User.class);
                 prefs.put("username", user.getUsername());
-            } else {
+            } else { //登录失败
                 Platform.runLater(() -> {
                     var alert = new InfoDialog(Alert.AlertType.INFORMATION, "密码错误", new ButtonType("好的"));
                     alert.showAndWait();

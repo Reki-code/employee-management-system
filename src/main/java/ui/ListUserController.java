@@ -13,7 +13,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -69,6 +68,9 @@ public class ListUserController implements Initializable {
         });
     }
 
+    /**
+     * 设置用户信息表
+     */
     private void setupUserTableView() {
         setupCellValueFactory(userNameEditableColumn, UserProperty::usernameProperty);
         setupCellValueFactory(phoneNumberEditableColumn, UserProperty::phoneNumberProperty);
@@ -122,7 +124,11 @@ public class ListUserController implements Initializable {
         return userData;
     }
 
-    public void deleteUser(ActionEvent event) {
+    /**
+     * 处理删除按钮点击事件
+     */
+    @FXML
+    private void deleteUser() {
         if (!editableTreeTableView.getSelectionModel().isEmpty()) {
             var selectUser = editableTreeTableView.getSelectionModel().getSelectedItem().getValue();
             if (selectUser != null && !userData.isEmpty()) {
@@ -133,31 +139,46 @@ public class ListUserController implements Initializable {
         }
     }
 
+    /**
+     * 删除指定的用户信息
+     *
+     * @param user 要删除的用户
+     */
     private void deleteUser(UserProperty user) {
-        if (User.delete(user.getId())) {
+        if (User.delete(user.getId())) { //删除成功
             userData.remove(user);
-        } else {
+        } else { //删除失败
             new PromptDialog("管理员管理", "删除失败").show(rootPane);
         }
     }
 
-    public void addUser(ActionEvent event) {
-        if (User.findUsername(username.getText())) {
+    /**
+     * 处理添加按钮点击事件
+     * 注册新的用户
+     */
+    @FXML
+    private void addUser() {
+        if (User.findUsername(username.getText())) { //用户名已存在
             new PromptDialog("添加管理员", "用户名已存在").show(rootPane);
-        } else {
+        } else { //用户不存在
             var user = new User();
             user.setUsername(username.getText());
             user.setPhoneNumber(phone.getText());
             user.setPassword(password.getText());
-            if (user.signUp()) {
+            if (user.signUp()) { //注册成功
                 new PromptDialog("添加管理员", "添加成功").show(rootPane);
                 userData.add(new UserProperty(user.getUsername(), user.getPhoneNumber(), user.getId()));
+                addPane.toBack();
             }
-            addPane.toBack();
         }
     }
 
-    public void showAddUserPane(ActionEvent event) {
+    /**
+     * 处理添加按钮点击事件
+     * 把添加用户信息面板放到前景
+     */
+    @FXML
+    private void showAddUserPane() {
         addPane.toFront();
     }
 
