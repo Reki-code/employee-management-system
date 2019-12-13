@@ -6,9 +6,8 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.*?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" stylesheets="@../styles/ListUser.css"
-           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.java.ui.ListUserController">
-    <AnchorPane fx:id="addPane" prefHeight="543.0" prefWidth="321.0" styleClass="add-pane"
-                StackPane.alignment="CENTER">
+           xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="main.java.ui.ListUserController">
+    <AnchorPane fx:id="addPane" prefHeight="543.0" prefWidth="321.0" styleClass="add-pane" StackPane.alignment="CENTER">
         <StackPane.margin>
             <Insets bottom="45.0" left="250.0" right="300.0" top="45.0"/>
         </StackPane.margin>
@@ -21,10 +20,10 @@
         <JFXTextField fx:id="username" layoutX="109.0" layoutY="214.0"/>
         <JFXTextField fx:id="phone" layoutX="109.0" layoutY="275.0"/>
         <JFXPasswordField fx:id="password" layoutX="109.0" layoutY="345.0"/>
-        <JFXButton layoutX="121.0" layoutY="436.0" onAction="#addUser" prefHeight="63.0" prefWidth="107.0"
-                   text="添加"/>
-        <Label layoutX="41.0" layoutY="36.0" prefHeight="72.0" prefWidth="297.0" styleClass="title"
-               text="添加管理员"/>
+        <JFXButton layoutX="91.0" layoutY="435.0" onAction="#addUser" prefHeight="63.0" prefWidth="107.0" text="添加"/>
+        <Label layoutX="41.0" layoutY="36.0" prefHeight="72.0" prefWidth="297.0" styleClass="title" text="添加管理员"/>
+        <JFXButton layoutX="218.0" layoutY="435.0" mnemonicParsing="false" onAction="#cancelAddUser" prefHeight="63.0"
+                   prefWidth="107.0" styleClass="cancel-button" text="取消"/>
     </AnchorPane>
     <BorderPane prefHeight="633.0" prefWidth="1047.0" styleClass="main-pane">
         <top>

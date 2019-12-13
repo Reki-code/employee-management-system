@@ -13,6 +13,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -180,6 +181,14 @@ public class ListUserController implements Initializable {
     @FXML
     private void showAddUserPane() {
         addPane.toFront();
+    }
+
+    @FXML
+    private void cancelAddUser(ActionEvent actionEvent) {
+        username.clear();
+        phone.clear();
+        password.clear();
+        addPane.toBack();
     }
 
     private static final class UserProperty extends RecursiveTreeObject<UserProperty> {
