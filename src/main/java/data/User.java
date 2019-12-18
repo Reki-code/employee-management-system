@@ -35,10 +35,11 @@ public class User {
     public static boolean updateUserDetail(String column, String newValue, int id) {
         String sql = "UPDATE " + TABLE_NAME + " SET " + column + " = ? WHERE id = ?";
         try (var conn = databaseHandler.getConnection()) {
-            var preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, newValue);
-            preparedStatement.setInt(2, id);
-            preparedStatement.execute();
+            try (var preparedStatement = conn.prepareStatement(sql)) {
+                preparedStatement.setString(1, newValue);
+                preparedStatement.setInt(2, id);
+                preparedStatement.execute();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -55,11 +56,13 @@ public class User {
     public static boolean findUsername(String name) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE username = ?";
         try (var conn = databaseHandler.getConnection()) {
-            var preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, name);
-            var resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return true;
+            try (var preparedStatement = conn.prepareStatement(sql)) {
+                preparedStatement.setString(1, name);
+                try (var resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return true;
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,14 +79,16 @@ public class User {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM " + TABLE_NAME;
         try (var conn = databaseHandler.getConnection()) {
-            var preparedStatement = conn.prepareStatement(sql);
-            var resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                var user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setUsername(resultSet.getString("username"));
-                user.setPhoneNumber(resultSet.getString("phoneNumber"));
-                users.add(user);
+            try (var preparedStatement = conn.prepareStatement(sql)) {
+                try (var resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        var user = new User();
+                        user.setId(resultSet.getInt("id"));
+                        user.setUsername(resultSet.getString("username"));
+                        user.setPhoneNumber(resultSet.getString("phoneNumber"));
+                        users.add(user);
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,9 +99,10 @@ public class User {
     public static boolean delete(int id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         try (var conn = databaseHandler.getConnection()) {
-            var preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            return 0 < preparedStatement.executeUpdate();
+            try (var preparedStatement = conn.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
+                return 0 < preparedStatement.executeUpdate();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

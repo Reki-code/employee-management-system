@@ -42,9 +42,10 @@ public class Employee {
     public static boolean delete(int id) throws SQLException {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         try (var conn = databaseHandler.getConnection()) {
-            var preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            return 0 < preparedStatement.executeUpdate();
+            try (var preparedStatement = conn.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
+                return 0 < preparedStatement.executeUpdate();
+            }
         }
     }
 
@@ -57,20 +58,22 @@ public class Employee {
         List<Employee> employees = new ArrayList<>();
         String sql = "SELECT * FROM " + TABLE_NAME;
         try (var conn = databaseHandler.getConnection()) {
-            var preparedStatement = conn.prepareStatement(sql);
-            var resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                var id = resultSet.getInt("id");
-                var name = resultSet.getString("name");
-                var gender = resultSet.getString("gender");
-                var age = resultSet.getInt("age");
-                var phoneNumber = resultSet.getString("phoneNumber");
-                var residence = resultSet.getString("residence");
-                var education = resultSet.getString("education");
-                var wage = resultSet.getInt("wage");
-                var entryDate = resultSet.getDate("entryDate").toLocalDate();
-                var employee = new Employee(id, name, gender, age, phoneNumber, residence, education, wage, entryDate);
-                employees.add(employee);
+            try (var preparedStatement = conn.prepareStatement(sql)) {
+                try (var resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        var id = resultSet.getInt("id");
+                        var name = resultSet.getString("name");
+                        var gender = resultSet.getString("gender");
+                        var age = resultSet.getInt("age");
+                        var phoneNumber = resultSet.getString("phoneNumber");
+                        var residence = resultSet.getString("residence");
+                        var education = resultSet.getString("education");
+                        var wage = resultSet.getInt("wage");
+                        var entryDate = resultSet.getDate("entryDate").toLocalDate();
+                        var employee = new Employee(id, name, gender, age, phoneNumber, residence, education, wage, entryDate);
+                        employees.add(employee);
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,17 +94,18 @@ public class Employee {
     public boolean insert() throws SQLException {
         String sql = "INSERT INTO " + TABLE_NAME + "(id, name, gender, age, phoneNumber, residence, education, wage, entryDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (var conn = databaseHandler.getConnection()) {
-            var preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            preparedStatement.setString(2, name);
-            preparedStatement.setString(3, gender);
-            preparedStatement.setInt(4, age);
-            preparedStatement.setString(5, phoneNumber);
-            preparedStatement.setString(6, residence);
-            preparedStatement.setString(7, education);
-            preparedStatement.setInt(8, wage);
-            preparedStatement.setDate(9, Date.valueOf(entryDate));
-            return 0 < preparedStatement.executeUpdate();
+            try (var preparedStatement = conn.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
+                preparedStatement.setString(2, name);
+                preparedStatement.setString(3, gender);
+                preparedStatement.setInt(4, age);
+                preparedStatement.setString(5, phoneNumber);
+                preparedStatement.setString(6, residence);
+                preparedStatement.setString(7, education);
+                preparedStatement.setInt(8, wage);
+                preparedStatement.setDate(9, Date.valueOf(entryDate));
+                return 0 < preparedStatement.executeUpdate();
+            }
         }
     }
 
@@ -124,17 +128,18 @@ public class Employee {
     public boolean save() throws SQLException {
         String sql = "UPDATE " + TABLE_NAME + " SET name = ?, gender = ?, age = ?, phoneNumber = ?, residence = ?, education = ?, wage = ?, entryDate = ? WHERE id = ?";
         try (var conn = databaseHandler.getConnection()) {
-            var preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, gender);
-            preparedStatement.setInt(3, age);
-            preparedStatement.setString(4, phoneNumber);
-            preparedStatement.setString(5, residence);
-            preparedStatement.setString(6, education);
-            preparedStatement.setInt(7, wage);
-            preparedStatement.setDate(8, Date.valueOf(entryDate));
-            preparedStatement.setInt(9, id);
-            return 0 < preparedStatement.executeUpdate();
+            try (var preparedStatement = conn.prepareStatement(sql)) {
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, gender);
+                preparedStatement.setInt(3, age);
+                preparedStatement.setString(4, phoneNumber);
+                preparedStatement.setString(5, residence);
+                preparedStatement.setString(6, education);
+                preparedStatement.setInt(7, wage);
+                preparedStatement.setDate(8, Date.valueOf(entryDate));
+                preparedStatement.setInt(9, id);
+                return 0 < preparedStatement.executeUpdate();
+            }
         }
     }
 
