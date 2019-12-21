@@ -43,6 +43,9 @@ public class DatePickerEditingCell extends TreeTableCell<EmployeeProperty, Local
         if (!isEmpty()) {
             super.startEdit();
             datePicker = new JFXDatePicker(getItem());
+            datePicker.setOnAction(event -> {
+                commitEdit(datePicker.getValue());
+            });
             datePicker.setDefaultColor(Color.valueOf("#0076FF"));
             datePicker.setConverter(datePickerConverter);
             setText(null);

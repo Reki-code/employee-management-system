@@ -33,6 +33,18 @@ public class EmployeeProperty extends RecursiveTreeObject<EmployeeProperty> {
         return new Employee(id.get(), name.get(), gender.get(), age.get(), phoneNumber.get(), residence.get(), education.get(), wage.get(), entryDate.get());
     }
 
+    public void setEmployee(Employee e) {
+        id.set(e.getId());
+        name.set(e.getName());
+        gender.set(e.getGender());
+        age.set(e.getAge());
+        phoneNumber.set(e.getPhoneNumber());
+        residence.set(e.getResidence());
+        education.set(e.getEducation());
+        wage.set(e.getWage());
+        entryDate.set(e.getEntryDate());
+    }
+
     public int getId() {
         return id.get();
     }

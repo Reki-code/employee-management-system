@@ -196,6 +196,7 @@ public class EmployeeListController implements Initializable {
     private <T> void saveEmployeeToDatabase(TreeTableColumn.CellEditEvent<EmployeeProperty, T> t, Function<Employee, Employee> change) {
         var currentRow = t.getRowValue().getValue().toEmployee();
         var newEmployee = change.apply(currentRow);
+        t.getRowValue().getValue().setEmployee(newEmployee);
         try {
             newEmployee.save();
         } catch (SQLException e) {

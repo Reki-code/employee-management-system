@@ -44,6 +44,9 @@ public class ComboBoxEditingCell extends TreeTableCell<EmployeeProperty, String>
         if (!isEmpty()) {
             super.startEdit();
             comboBox = new JFXComboBox<>(data);
+            comboBox.setOnAction(event -> {
+                commitEdit(comboBox.getValue());
+            });
             setText(getItem());
             setGraphic(comboBox);
         }
