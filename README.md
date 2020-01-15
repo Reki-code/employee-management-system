@@ -1,6 +1,6 @@
 # 职工信息管理系统
 
-本系统基于JavaFx设计, 使用了[WorkbenchFX](https://github.com/dlsc-software-consulting-gmbh/WorkbenchFX)和MariaDB数据库.使用的开发工具是 Intellij idea.
+本系统基于JavaFx设计, 使用了[WorkbenchFX](https://github.com/dlsc-software-consulting-gmbh/WorkbenchFX)、[AnimateFX](https://github.com/Typhon0/AnimateFX)和MariaDB数据库.使用的开发工具是 Intellij idea.
 
 ## 内容列表
 
